@@ -1,0 +1,239 @@
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+      <div class="card-header" id="maincard">
+          Customer Registration
+      </div>
+      <div class="card-body">
+          <div *ngIf='!viewFlag' class="new">
+            <div class="row" *ngIf="isEditing">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <mat-slide-toggle [(ngModel)]="customer.Active">Active</mat-slide-toggle>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="customer.Name" placeholder="Customer Name">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="customer.CompanyId" placeholder="Company">
+                    <mat-option *ngFor="let company of CompanyData" [value]="company.CompanyId">
+                      {{company.CompanyName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" placeholder="Contact No" [(ngModel)]="customer.ContactNo">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="customer.State" (ngModelChange)="getAllCity()" placeholder="Select State" name="State">
+                    <mat-option *ngFor="let state of StateData" [value]="state.StateId">
+                      {{state.StateName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" style="margin-top:4%">
+                  <input matInput placeholder="Email" [(ngModel)]="customer.Email">
+                </mat-form-field>
+        
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="customer.City" placeholder="Select a City" name="City">
+                    <mat-option *ngFor="let city of CityData" [value]="city.CityId">
+                      {{city.CityName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field style="margin-top:4%" class="example-full-width">
+                  <input matInput placeholder="Contact Person" [(ngModel)]="customer.ContactPerson">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <textarea style="height:103px" [(ngModel)]="customer.Address" matInput placeholder="Address"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Concern Person" [(ngModel)]="customer.ConcernPerson">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="PAN No" [(ngModel)]="customer.PANNumber">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" placeholder="GST No" [(ngModel)]="customer.GSTNo">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" placeholder="IGST" [(ngModel)]="customer.IGST">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" placeholder="CGST" [(ngModel)]="customer.CGST">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" matInput placeholder="SGST" [(ngModel)]="customer.SGST">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="CIN" [(ngModel)]="customer.CINNumber">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top:0.5%">
+              <div class="col-sm-12" style="text-align:right">
+                <button mat-raised-button color="primary" (click)="saveCustomer()">Save</button>&nbsp;
+                <button mat-raised-button (click)="resetScreen()" color="accent">Cancel</button>
+              </div>
+            </div>
+          </div>
+        
+          <div *ngIf='viewFlag' class="list">
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-12" style="text-align:left">
+                <button (click)="onNewClick()" mat-raised-button color="warn">
+                  <i class="material-icons" style="font-size:20px">add</i> New</button>
+              </div>
+            </div>
+            <div class="row">
+        
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchId($event.target.value)" matInput placeholder="Search By Id">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchName($event.target.value)" matInput placeholder="Search By Name">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchContact($event.target.value)" matInput placeholder="Search By ContactNo">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchEmail($event.target.value)" matInput placeholder="Search By Email">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchCompany($event.target.value)" matInput placeholder="Search By Company Name">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchGST($event.target.value)" matInput placeholder="Search By GSTNo">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-12">
+                <div class="mat-elevation-z8">
+                  <table mat-table [dataSource]="dataSource" style="width:100%">
+        
+                    <ng-container matColumnDef="Id">
+                      <th mat-header-cell *matHeaderCellDef> ID </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="Name">
+                      <th mat-header-cell *matHeaderCellDef> Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="ContactNo">
+                      <th mat-header-cell *matHeaderCellDef> Contact </th>
+                      <td mat-cell *matCellDef="let element"> {{element.ContactNo}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="Email">
+                      <th mat-header-cell *matHeaderCellDef> Email </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="Address">
+                      <th mat-header-cell *matHeaderCellDef> Address </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Address}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="GSTNo">
+                      <th mat-header-cell *matHeaderCellDef> GST </th>
+                      <td mat-cell *matCellDef="let element"> {{element.GSTNo}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="CompanyName">
+                      <th mat-header-cell *matHeaderCellDef> Company </th>
+                      <td mat-cell *matCellDef="let element"> {{element.CompanyName}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="StateName">
+                      <th mat-header-cell *matHeaderCellDef> State </th>
+                      <td mat-cell *matCellDef="let element"> {{element.StateName}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="CityName">
+                      <th mat-header-cell *matHeaderCellDef> City </th>
+                      <td mat-cell *matCellDef="let element"> {{element.CityName}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="Active">
+                      <th mat-header-cell *matHeaderCellDef> Status </th>
+                      <td mat-cell *matCellDef="let element">
+                        <!-- {{element.Active}} -->
+                        <mat-chip color="primary" *ngIf='element.Active'>Active</mat-chip>
+                        <mat-chip color="accent" *ngIf='!element.Active'>In Active</mat-chip>
+                      </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef> Action </th>
+                      <td mat-cell *matCellDef="let element">
+                        <div class="row" style="text-align: center">
+                          <i color="primary" style="color:blue;cursor: pointer;" (click)="modifyCustomer(element)" class="material-icons">edit</i>&nbsp;
+                          <i color="warn" style="color:red;cursor: pointer;" (click)="removeCustomerDetail(element)" class="material-icons">delete_forever</i>
+                        </div>
+                      </td>
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+        
+                  <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+

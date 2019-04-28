@@ -1,0 +1,16 @@
+<mat-accordion *ngFor="let child of items">
+  <mat-expansion-panel [disabled]="child.SubMenuItems.length==0">
+    <mat-expansion-panel-header >
+        <mat-panel-title  *ngIf="child.SubMenuItems && child.SubMenuItems.length > 0">
+            <mat-checkbox [(ngModel)]="child.SubMenuItems.IsSelected" ></mat-checkbox>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{child.MenuName}}
+          </mat-panel-title>
+      <mat-panel-title *ngIf="!child.SubMenuItems || child.SubMenuItems.length === 0">
+        <mat-checkbox [(ngModel)]="child.IsSelected"></mat-checkbox>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{child.MenuName}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-role-menu-child #Rolemenu [items]="child.SubMenuItems"></app-role-menu-child>
+  </mat-expansion-panel>
+</mat-accordion>
+

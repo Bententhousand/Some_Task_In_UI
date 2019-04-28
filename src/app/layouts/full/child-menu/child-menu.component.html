@@ -1,0 +1,22 @@
+<mat-menu #SubMenuItems="matMenu" [overlapTrigger]="false">
+    <mat-nav-list appAccordion>
+        <mat-accordion>
+  <span *ngFor="let child of items">
+    <span *ngIf="child.SubMenuItems && child.SubMenuItems.length > 0">
+      <button id="menuhover" mat-menu-item [matMenuTriggerFor]="menu.SubMenuItems" style="font-size: 14px">
+        <i [class]="child.iconName" aria-hidden="true"></i> &nbsp;
+        <span>{{child.MenuName}}</span>
+      </button>
+      <app-child-menu #menu [items]="child.SubMenuItems"></app-child-menu>
+    </span>
+    <span *ngIf="!child.SubMenuItems || child.SubMenuItems.length === 0">
+      <button id="menuhover" mat-menu-item [routerLink]="'/' + child.MenuUrl"
+        style="padding-top:0px;padding-bottom: 0px ;border-bottom: 0px;font-size: 14px;">
+        <i [class]="child.iconName" aria-hidden="true"></i> &nbsp;
+        <span>{{child.MenuName}}</span>
+      </button>
+    </span>
+  </span>
+</mat-accordion>
+</mat-nav-list>
+</mat-menu>

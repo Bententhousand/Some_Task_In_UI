@@ -1,0 +1,268 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+      Salary Invoice
+    </div>
+    <div class="card-body">
+      <div class="salaryView">
+        <div *ngIf='SalaryView' class="new">
+          <div class="row">
+            <div class="col-sm-12" style="text-align:right;">
+              <div>
+                <button mat-raised-button (click)="onListSalaryClick()" color="accent">
+                  <mat-icon>backspace</mat-icon>
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" style="border:1px solid lightgray">
+              <br>
+              <div class="row">
+                <div class="col-sm-12" style="text-align: center">
+                  <h5 style="color:blue">TAX INVOICE</h5>
+                </div>
+              </div>
+              <br>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td rowspan="2">Pyramid Services</td>
+                    <td><label>Invoice No</label><br>
+                      <mat-form-field style="width:50%">
+                        <input matInput>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <label>Date</label><br>
+                      <mat-form-field style="width:50%">
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>GSTIN:</td>
+                    <td>Billing Period</td>
+                  </tr>
+                  <tr>
+                    <td rowspan="2">Pyramid Services</td>
+                  </tr>
+                  <tr>
+                    <td>PAN Number
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Particulars</th>
+                    <th>SAC Code</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Per</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>462784</td>
+                    <td>462784</td>
+                    <td>462784</td>
+                    <td>462784</td>
+                    <td>462784</td>
+                    <td>462784</td>
+                    <td>462784</td>
+                  </tr>
+                  <tr>
+                    <th colspan="6" scope="row">Total</th>
+                    <td>462784</td>
+                  </tr>
+                  <tr>
+                    <th colspan="7" scope="row">Amount Chargeble</th>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th rowspan="2">jskfhsd</th>
+                    <th rowspan="2">jskfhsd</th>
+                    <th colspan="2">sfhsj</th>
+                    <th colspan="2">sfhsj</th>
+                    <th rowspan="2">total</th>
+                  </tr>
+                  <tr>
+                    <th>R</th>
+                    <th>A</th>
+                    <th>R</th>
+                    <th>A</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>23</td>
+                    <td>23</td>
+                    <td>23</td>
+                    <td>23</td>
+                    <td>23</td>
+                    <td>23</td>
+                    <td>23</td>
+                  </tr>
+                  <tr>
+                    <th colspan="7" scope="row">Amount Chargeble</th>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td colspan="2">jskfhsd</td>
+                    <td colspan="4">jskfhsd</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">jskfhsd</td>
+                    <td colspan="4">jskfhsd</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+            </div>
+            <div class="col-sm-1"></div>
+          </div>
+        </div>
+      </div>
+      <div class="Annexure">
+        <div *ngIf='AnnexureView' class="new">
+          <div class="row">
+            <div class="col-sm-12" style="text-align:right;">
+              <div>
+                <button mat-raised-button (click)="onListAnnexureClick()" color="accent">
+                  <mat-icon>backspace</mat-icon>
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-12" style="border:1px solid lightgray">
+              <br>
+              <div class="row">
+                <div class="col-sm-12" style="text-align: center">
+                  <h5 style="color:blue">Annexure</h5>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-12" style="text-align: center">
+                  <h5>Indian Railway-<span>March 2019</span></h5>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Service</th>
+                        <th>No of person</th>
+                        <th>Days Per person</th>
+                        <th>Total days</th>
+                        <th>Man Days Worked</th>
+                        <th>Contractual Amount</th>
+                        <th>Amount (In Rs)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>HK</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>30</td>
+                        <td>20000</td>
+                        <td>24000</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>HK</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>30</td>
+                        <td>20000</td>
+                        <td>24000</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>HK</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>30</td>
+                        <td>20000</td>
+                        <td>24000</td>
+                      </tr>
+                      <tr>
+                        <td colspan="5"></td>
+                        <td></td>
+                        <td></td>
+                        <td>24000</td>
+                      </tr>
+                      <tr>
+                        <td colspan="7">Add : IGST @ 18%</td>
+                        <td>24000</td>
+                      </tr>
+                      <tr>
+                        <td colspan="7">GRAND TOTAL</td>
+                        <td>24000</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!SalaryView && !AnnexureView" class="list">
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Click Here to Go Salary Invoice</label>
+          </div>
+          <div class="col-sm-3" style="text-align:right;">
+            <div>
+              <button mat-raised-button (click)="SalaryView = !SalaryView" color="accent">
+                <mat-icon>add</mat-icon>
+                Invoice Generation
+              </button>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <label>Click Here to Go Annexure</label>
+          </div>
+          <div class="col-sm-3" style="text-align:right;">
+            <div>
+              <button mat-raised-button (click)="AnnexureView = !AnnexureView" color="accent">
+                <mat-icon>add</mat-icon>
+                Annexure
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

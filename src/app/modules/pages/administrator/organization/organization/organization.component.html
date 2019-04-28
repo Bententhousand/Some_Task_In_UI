@@ -1,0 +1,197 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+      Organization
+    </div>
+    <div class="card-body">
+      <div *ngIf='!viewFlag' class="new">
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4">
+            <mat-form-field class="example-full-width">
+              <input required matInput  [(ngModel)]="model.LevelName"  placeholder="Name of Organization">
+              <mat-error> Name of Organization required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <mat-form-field class="example-full-width">
+              <input required matInput  [(ngModel)]="model.Code"   placeholder="Organization Level Code">
+              <mat-error> OrganizationLevelCode required</mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <mat-form-field class="example-full-width">
+              <mat-select   [(ngModel)]="model.Parent"  placeholder="Reporting office">
+                <mat-option *ngFor="let i of OrganizationlevelIdName" [value]="i.OrganizationLevelId">{{i.LevelName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12" style="text-align: right;padding-right:0px">
+            <div class="btn">
+              <button *ngIf="!isEditing" mat-raised-button color="primary"
+                (click)="saveOrganizationLevel()">Save</button>&nbsp;
+              <button *ngIf="isEditing" mat-raised-button color="primary"
+                (click)="saveOrganizationLevel()">Update</button>&nbsp;
+              <button (click)="onNewClick()" mat-raised-button color="warn">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf='viewFlag' class="list">
+        <div class="row" style="margin-top:3%">
+          <div class="col-sm-8" style="padding-left:30px">
+            <div class="input-group ht-41">
+              <div class="input-group-prepend">
+                <span class="input-group-text input-group-empty">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control text-box-empty"
+                placeholder="Global Filter (Type Code, LevelName..)" (keyup)="applyFilter($event.target.value)">
+            </div>
+          </div>
+          <div class="col-sm-4" style="text-align:right;padding-right:30px">
+            <button mat-raised-button (click)="onNewClick()" color="accent">
+              <mat-icon>add</mat-icon>New
+            </button>
+          </div>
+        </div>
+        <br>
+
+
+        <div class="col-lg-12 col-md-12">
+          <!--/ table start-->
+          <div class="table-container mat-elevation-z2">
+            <mat-table class="color-table" #table [dataSource]="dataSource" matSort>
+
+              <ng-container matColumnDef="SNo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                  SNo
+                  <button mat-icon-button [matMenuTriggerFor]="SNoFilter" class="Filter-icon-WT">
+                    <mat-icon aria-label="SNo Filter">keyboard_arrow_down</mat-icon>
+                  </button>
+                  <mat-menu #SNoFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                    <div class="info-wrapper menuPop">
+                      <mat-form-field class="w-100 input-label">
+                        <input matInput placeholder="Search SNo" (click)="handleClick($event)"
+                          (keyup)="applyFilter($event.target.value)" autofocus>
+                      </mat-form-field>
+                      <div class="ta-w">
+                        <button mat-mini-fab color="warn" class="satPop-ok">
+                          <mat-icon aria-label="Close">close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element;let i=index"> {{i+1}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="Code">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                  Code
+                  <button mat-icon-button [matMenuTriggerFor]="EmpFilter" class="Filter-icon-WT">
+                    <mat-icon aria-label="Area Filter">keyboard_arrow_down</mat-icon>
+                  </button>
+                  <mat-menu #EmpFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                    <div class="info-wrapper menuPop">
+                      <mat-form-field class="w-100 input-label">
+                        <input matInput placeholder="Search Code." (click)="handleClick($event)"
+                          (keyup)="applyFilter($event.target.value)" autofocus>
+                      </mat-form-field>
+                      <div class="ta-w">
+                        <button mat-mini-fab color="warn" class="satPop-ok">
+                          <mat-icon aria-label="Close">close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let ListOrganizationLevelArray"> {{ListOrganizationLevelArray.Code}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="LevelName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                  LevelName
+                  <button mat-icon-button [matMenuTriggerFor]="LevelNameFilter" class="Filter-icon-WT">
+                    <mat-icon aria-label="Phone Filter">keyboard_arrow_down</mat-icon>
+                  </button>
+                  <mat-menu #LevelNameFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                    <div class="info-wrapper menuPop">
+                      <mat-form-field class="w-100 input-label">
+                        <input matInput placeholder="Search LevelName." (click)="handleClick($event)"
+                          (keyup)="applyFilter($event.target.value)" autofocus>
+                      </mat-form-field>
+                      <div class="ta-w">
+                        <button mat-mini-fab color="warn" class="satPop-ok">
+                          <mat-icon aria-label="Close">close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let ListOrganizationLevelArray"> {{ListOrganizationLevelArray.LevelName}}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="ReportingOffice">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                  ReportingOffice
+                  <button mat-icon-button [matMenuTriggerFor]="ReportingOfficeFilter" class="Filter-icon-WT">
+                    <mat-icon aria-label="Phone Filter">keyboard_arrow_down</mat-icon>
+                  </button>
+                  <mat-menu #ReportingOfficeFilter="matMenu" yPosition="below" [overlapTrigger]="false"
+                    xPosition="before">
+                    <div class="info-wrapper menuPop">
+                      <mat-form-field class="w-100 input-label">
+                        <input matInput placeholder="Search ReportingOffice." (click)="handleClick($event)"
+                          (keyup)="applyFilter($event.target.value)" autofocus>
+                      </mat-form-field>
+                      <div class="ta-w">
+                        <button mat-mini-fab color="warn" class="satPop-ok">
+                          <mat-icon aria-label="Close">close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let ListOrganizationLevelArray"> {{ListOrganizationLevelArray.ParentName}}
+                </mat-cell>
+              </ng-container>
+
+
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef class="color-white">Action</mat-header-cell>
+                <mat-cell *matCellDef="let ListOrganizationLevelArray">
+                  <button mat-icon-button color="primary" matTooltip="Edit This Row" (click)="editOrg(true,ListOrganizationLevelArray)"
+                  [matTooltipClass]="'custom-tip'">
+                    <mat-icon aria-label="Edit Row" class="f-18">
+                      edit
+                    </mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" matTooltip="Delete This Row"  (click)="Removeorg(ListOrganizationLevelArray)"
+                   [matTooltipClass]="'custom-tip'">
+                    <mat-icon aria-label="Add" class="f-18">delete</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row;let i=index; columns: displayedColumns;" >
+              </mat-row>
+            </mat-table>
+
+            <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+          </div>
+          <!--/ table start-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

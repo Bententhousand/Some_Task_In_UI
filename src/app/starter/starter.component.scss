@@ -1,0 +1,106 @@
+body {
+	margin-top: 50px;
+}
+
+$ut-green: #1fad5c;
+$ut-blue: #378ae9;
+$ut-red: #e93737;
+$ut-orange:#ff9900;
+$ut-yellow:#ffcc00;
+$ut-violet:#6600cc;
+$ut-darkgreen:#009900;
+$ut-darkpink:#cc0066;
+$ut-pink:#ff0066;
+
+
+
+.card {
+	background: white;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	box-shadow: 0px 5px 22px -3px rgba(0, 0, 0, 0.10);
+	cursor: pointer;
+	font-family: 'Lato', sans-serif;
+	font-size: 16px;
+   margin-left: 5px;
+
+   width: 95%;
+   
+	transition: all .3s ease;
+	
+	&:hover {
+		box-shadow: 0px 5px 30px -3px rgba(0, 0, 0, 0.27);
+	}
+	
+	&:hover .circle-animation-draw .border {
+
+    .border__green {
+      stroke-dashoffset: 2px;
+      transform: rotate(-135deg);
+			transition: all .5s ease;
+    }
+	}
+	
+	&:hover .circle-animation-emit .border {
+			
+			.border__blue {
+				stroke: $ut-blue;
+				stroke-width: 2px;
+				transition: all .5s ease;
+		}
+	}
+	
+}
+
+.card--cap {
+	height: 5px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+
+	&.green {
+		background: $ut-green;
+	}
+
+	&.blue {
+		background: $ut-blue;
+   }
+   &.red {
+      background: $ut-red;
+   }
+   &.orange {
+      background: $ut-orange;
+   }
+   &.yellow {
+      background: $ut-yellow;
+   }
+   &.violet {
+      background: $ut-violet;
+   }
+   &.darkgreen {
+      background: $ut-darkgreen;
+   }
+   &.darkpink {
+      background: $ut-darkpink;
+   }
+   &.pink {
+      background: $ut-pink;
+   }
+}
+
+.card--body {
+	min-height: 10px;
+	padding: 5px;
+}
+
+.card--header {
+	font-weight: bold;
+	font-size: 14px;
+   margin-bottom: 8px;
+   padding-top: 3px;
+	text-transform: uppercase;
+}
+
+
+
+
+

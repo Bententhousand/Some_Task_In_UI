@@ -1,0 +1,147 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+      Site Allocation
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-select [(ngModel)]="addSiteAllocation.CustomerId" (ngModelChange)="getAllBranch();getSiteAllocation()"
+              placeholder="Customer Name">
+              <mat-option *ngFor="let customer of CustomerData" [value]="customer.CustomerId">
+                {{customer.CustomerName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-select [(ngModel)]="addSiteAllocation.Id" (ngModelChange)="getAllSite()" placeholder="Branch">
+              <mat-option *ngFor="let branch of BranchData" [value]="branch.Id">
+                {{branch.Branch}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-select [(ngModel)]="addSiteAllocation.SiteId" (ngModelChange)="getAllClassification()"
+              placeholder="Site">
+              <mat-option *ngFor="let site of SiteData" [value]="site.SiteId">
+                {{site.SiteName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-select [(ngModel)]="addSiteAllocation.ClassificationId" (ngModelChange)="getAllService()"
+              placeholder="Classification">
+              <mat-option *ngFor="let cls of ClassificationData" [value]="cls.ClassificationId">
+                {{cls.Classification}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" style="margin-top:1%">
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-select [(ngModel)]="addSiteAllocation.ServiceId" (ngModelChange)="getAllManpowerList()"
+              placeholder="Service">
+              <mat-option *ngFor="let service of ServiceData" [value]="service.DesignationId">
+                {{service.Service}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="example-full-width">
+            <input matInput [(ngModel)]="addSiteAllocation.NoofManpower"
+              (keypress)='onEnterManpower($event,$event.target.value)' placeholder="Manpower">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6" style="text-align:right">
+          <button mat-raised-button (click)='AddAllSite()' color="primary">Add</button>&nbsp;
+          <button mat-raised-button (click)="resetScreen()" color="accent">Clear</button>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Man Power List</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Manpower Id</th>
+                    <th scope="col">Manpower Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let manpower of ManData;let i = index'>
+                    <td>
+                      {{manpower.ManpowerId}}
+                    </td>
+                    <td>{{manpower.ManpowerName}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Customer</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Site</th>
+                <th scope="col">Classification</th>
+                <th scope="col">Service</th>
+                <th scope="col">Manpower</th>
+                <th scope="col">Manpower List</th>
+                <th scope="col">Action</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let site of getAllSiteAllocation;let i = index'>
+                <td>{{site.CustomerName}}</td>
+                <td>{{site.BranchName}}</td>
+                <td>{{site.SiteName}}</td>
+                <td>{{site.ClassificationName}}</td>
+                <td>{{site.Service}}</td>
+                <td>{{site.NoofManpower}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" style="background: none;color:black" data-toggle="modal"
+                    data-target="#exampleModal">View</button>
+                </td>
+                <td>
+                  <i class="material-icons" (click)='removeSiteAllocation(site)'
+                    style="cursor:pointer;color:red">delete_forever</i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

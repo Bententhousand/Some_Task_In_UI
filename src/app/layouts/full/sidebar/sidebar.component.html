@@ -1,0 +1,217 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+<div class="user-profile" style="  background-color: #1976d2;background: linear-gradient(145deg,#0d47a1,#42a5f5);">
+  <!-- User profile image -->
+  <div class="profile-img">
+    <img src="assets/images/users/man.png" alt="user"> </div>
+  <!-- User profile text-->
+  <!-- ============================================================== -->
+  <!-- Profile - style you can find in header.scss -->
+  <!-- ============================================================== -->
+  <div class="profile-text">
+    <a [matMenuTriggerFor]="sdprofile" class=""> Admin
+      <i class="ti-angle-down font-12 m-l-5"></i>
+    </a>
+  </div>
+  <mat-menu #sdprofile="matMenu" class="mymegamenu">
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon> Settings
+    </button>
+    <button mat-menu-item>
+      <mat-icon>account_box</mat-icon> Profile
+    </button>
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon> Disable notifications
+    </button>
+    <button routerLink="/login" mat-menu-item>
+      <mat-icon>exit_to_app</mat-icon> Sign Out
+    </button>
+  </mat-menu>
+
+</div>
+
+
+<div class="row">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
+    <span *ngFor="let item of menuItems">
+      <span *ngIf="item.SubMenuItems.length > 0" style="text-align: justify">
+        <button mat-button color="primary" [matMenuTriggerFor]="menu.SubMenuItems"
+          style="color: black;background: inherit;font-size: 16px;width:100%;text-align: justify">
+          {{item.MenuName}}
+        </button><br />
+
+        <app-child-menu #menu [items]="item.SubMenuItems"></app-child-menu>
+      </span>
+      <span *ngIf="item.SubMenuItems.length === 0"> &nbsp;
+        <button mat-button color="primary"
+          style="color: black;background: inherit;font-size: 16px;width:100%;text-align: justify">
+          {{item.MenuName}}
+        </button>
+        <br />
+      </span>
+    </span>
+  </div>
+  <div class="col-sm-1"></div>
+</div>
+
+<!-- <mat-nav-list appAccordion>
+  <mat-accordion>
+    <mat-expansion-panel id="Headerhover">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          BDM
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button id="menuhover" routerLink="/MySurvey" mat-flat-button style="font-size: 14px;width:100%;text-align: left">
+        My Survey
+      </button>
+      <button id="menuhover" routerLink="/TargetSetting" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Target Setting
+      </button>
+      <button id="menuhover" routerLink="/LeadTo" mat-flat-button style="font-size: 14px;width:100%;text-align: left">
+        Lead To Transfer
+      </button>
+    </mat-expansion-panel>
+    <mat-expansion-panel id="Headerhover" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          CUSTOMER
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button id="menuhover" routerLink="/Contract" mat-flat-button style="font-size: 14px;width:100%;text-align: left">
+        Contract Master
+      </button>
+      <button id="menuhover" routerLink="/ContractDetail" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Contract Detail
+      </button>
+      <button id="menuhover" routerLink="/CustomerRegistration" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Customer Registration
+      </button>
+      <button id="menuhover" routerLink="/CustomerSiteMapping" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Customer Site Mapping
+      </button>
+      <button id="menuhover" routerLink="/SiteAllocation" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Site Allocation
+      </button>
+    </mat-expansion-panel>
+    <mat-expansion-panel id="Headerhover">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          OPERATION
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button id="menuhover" routerLink="/Manpower" mat-flat-button style="font-size: 14px;width:100%;text-align: left">
+        Manpower
+      </button>
+      <button id="menuhover" routerLink="/AssignFieldOfficer" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Assign Field Officer
+      </button>
+      <button id="menuhover" routerLink="/AssignManpower" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Assign Manpower
+      </button>
+      <button id="menuhover" routerLink="/AttendanceDetail" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Attendance Detail
+      </button>
+      <button id="menuhover" routerLink="/AttendanceMaster" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Attendance Master
+      </button>
+    </mat-expansion-panel>
+    <mat-expansion-panel id="Headerhover">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          MASTERS
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button id="menuhover" routerLink="/Employee" mat-flat-button style="font-size: 14px;width:100%;text-align: left">
+        Employee
+      </button>
+      <button id="menuhover" routerLink="/Department" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Department
+      </button>
+      <button id="menuhover" routerLink="/Designation" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Designation
+      </button>
+    </mat-expansion-panel>
+    <mat-expansion-panel id="Headerhover">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          ADMINISTRATION
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button id="menuhover" routerLink="/ListOfUserAccount" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        User Account
+      </button>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            LOCATION
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button id="menuhover" routerLink="/Country" mat-flat-button
+          style="font-size: 14px;width:100%;text-align: left">
+          Country
+        </button>
+        <button id="menuhover" routerLink="/State" mat-flat-button
+          style="font-size: 14px;width:100%;text-align: left">
+          State
+        </button>
+        <button id="menuhover" routerLink="/City" mat-flat-button
+          style="font-size: 14px;width:100%;text-align: left">
+          City
+        </button>
+        <button id="menuhover" routerLink="/Area" mat-flat-button
+          style="font-size: 14px;width:100%;text-align: left">
+          Area
+        </button>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
+    <mat-expansion-panel id="Headerhover">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          ORGANAIZATION
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button id="menuhover" routerLink="/CompanyInitiation" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Company
+      </button>
+      <button id="menuhover" routerLink="/Organization" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Organization
+      </button>
+    </mat-expansion-panel>
+    <mat-expansion-panel id="Headerhover">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          ROLE LIBRARY
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button id="menuhover" routerLink="/Role" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Create Role
+      </button>
+      <button id="menuhover" routerLink="/RoleMenuPrivilege" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        Role Menu Privilege
+      </button>
+      <button id="menuhover" routerLink="/UserMenuPrivilege" mat-flat-button
+        style="font-size: 14px;width:100%;text-align: left">
+        User Menu Privilege
+      </button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-nav-list> -->

@@ -1,0 +1,439 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+      My Survey
+    </div>
+    <div class="card-body">
+      <div *ngIf="!isFormOpen">
+        <div class="row">
+          <div class="col-sm-12">
+            <button mat-raised-button color="warn" (click)="addBdmAppointment()">
+              <i class="material-icons" style="font-size:20px">add</i> New</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="objSearchParams.searchEmployee" matInput placeholder="Search by Employee">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="objSearchParams.searchClient" matInput placeholder="Search by Client">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="objSearchParams.searchCallType" matInput placeholder="Search Caller Type">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field>
+              <input [(ngModel)]="objSearchParams.FromDate" matInput [matDatepicker]="picker" placeholder="From date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field>
+              <input [(ngModel)]="objSearchParams.ToDate" matInput [matDatepicker]="picker1" placeholder="To date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <button (click)="onClickGoSearch()" mat-raised-button color="primary">
+              <i class="material-icons" style="font-size:20px">arrow_right_alt</i> Go</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Employee Detail</th>
+                  <th scope="col">Client Detail</th>
+                  <th scope="col">Contact Person</th>
+                  <th scope="col">Place</th>
+                  <th scope="col">Caller Type</th>
+                  <th scope="col">Attachment Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of surveyGridDetails;index as i" (dblclick)="onEditRow(row)">
+                  <ng-container
+                    *ngIf="row.EmployeeName.toString().toLowerCase().startsWith(objSearchParams.searchEmployee.toLowerCase().trim())
+                    &&
+                    row.ClientName.toString().toLowerCase().startsWith(objSearchParams.searchClient.toLowerCase().trim())
+                    &&
+                    row.ContactPerson.toString().toLowerCase().startsWith(objSearchParams.searchCallType.toLowerCase().trim())">
+                    <td>
+                      <div>
+                        <span class="text-left"><strong>EmployeeId: </strong>{{row.EmployeeNo}}</span><br />
+                        <span class="text-left"><strong>EmployeeName: </strong>{{row.EmployeeName}}</span><br />
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <span class="text-left"><strong>Name: </strong>{{row.ClientName}}</span><br />
+                        <span class="text-left"><strong>Address: </strong>{{row.ClientAddress}}</span><br />
+                        <span class="text-left"><strong>ContactNo:</strong>{{row.ClientContactNo}}</span><br />
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <span class="text-left"><strong>Name: </strong>{{row.ContactPerson}}</span><br />
+                        <span class="text-left"><strong>Mobile: </strong>{{row.Mobile}}</span><br />
+                        <span class="text-left"><strong>Email:</strong>{{row.Email}}</span><br />
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <span class="text-left"><strong>City: </strong>{{row.CityName}}</span><br />
+                        <span class="text-left"><strong>State: </strong>{{row.StateName}}</span><br />
+                      </div>
+                    </td>
+                    <td class="text-center">{{ row.Calltype}}</td>
+                    <td class="text-center">
+                      <span *ngIf="row.AttachmentFlag === 1" class="label label-success">Attached</span>
+                    </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isFormOpen">
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.ClientName" matInput placeholder="Client Name">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.ClientAddress" matInput placeholder="Client Address">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.ClientContactNo" matInput placeholder="Client Contact No">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.ContactPerson" matInput placeholder="Contact Person">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="AppoinmentDetail.Designation" placeholder="Designation">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6">
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.Mobile" matInput placeholder="Mobile">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.Email" matInput placeholder="Email">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.ReferBy" matInput placeholder="ReferBy">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="AppoinmentDetail.SelectedState" placeholder="Select State">
+                    <mat-option value="undefined">
+                      Select A State
+                    </mat-option>
+                    <mat-option *ngFor="let state of StateMasterList" [value]="state">
+                      {{state.Name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="AppoinmentDetail.SelectedCity" placeholder="Select City">
+                    <mat-option value="undefined">
+                      Select A City
+                    </mat-option>
+                    <mat-option *ngFor="let city of CityMasterList" [value]="city">
+                      {{city.Name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <mat-form-field class="example-full-width">
+                  <input [(ngModel)]="AppoinmentDetail.CallType" disabled matInput placeholder="Call Status">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box box-solid box-primary" style="overflow-x:scroll">
+          <div class="box-header">
+            <span class="h5" style="color:white">
+              Call History
+            </span>
+          </div>
+          <div class="modal-body" *ngIf="checkEditing" id="modal-body">
+            <form name="myForm" role="form" class="form-horizontal well well-sm">
+              <fieldset>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                      <label for="CallType" class="control-label col-sm-3">Call Type</label>
+                      <div class="col-sm-9">
+                        <mat-form-field>
+                          <mat-select placeholder="Select Month">
+                            <mat-option *ngFor="let month of month" [value]="month.value">
+                              {{month.viewValue}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="date" class="control-label col-sm-3">Date</label>
+                      <div class="col-sm-9">
+                        <input matInput [matDatepicker]="picker2" placeholder="To date">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="remark" class="control-label col-sm-3">Remarks</label>
+                      <div class="col-sm-9">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Search by Employee">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="modal-footer">
+                <button mat-raised-button color="primary">Save</button>&nbsp;
+              </div>
+            </form>
+            <div class="col-md-12">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="text-center">Call Type</th>
+                    <th>Date</th>
+                    <th>Remarks</th>
+                    <th>Modified By</th>
+                    <th>Attachment</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="noOfRows" colspan="10"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        <form name="reqForm" role="form" class="well well-sm">
+          <fieldset>
+            <h5>Requirement Details </h5>
+            <hr style="border-color:cadetblue" />
+            <hr />
+            <div class="row">
+
+              <div class="form-group col-sm-3">
+                <label for="service">Service Type</label>
+                <mat-form-field>
+                  <mat-select [(ngModel)]="requirement.SelectedService" placeholder="Select service">
+                    <mat-option *ngFor="let service of ServiceMasterList" [value]="service">
+                      {{service.Name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="designation">Designation</label>
+                <mat-form-field>
+                  <mat-select [(ngModel)]="requirement.SelectedDesignation" placeholder="Select Designation">
+                    <mat-option *ngFor="let designation of DesignationMasterList" [value]="designation">
+                      {{designation.Name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-sm-2">
+                <label for="rate">Rate Per Employee</label>
+                <div class="input-group">
+                  <!-- <span class="input-group-addon" id="basic-addon1"><i class="fa fa-rupee"></i></span> -->
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Rate per Employee" [(ngModel)]="requirement.RatePerEmployee">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group col-sm-2">
+                <label for="count">Employee Count</label>
+                <div class="input-group">
+                  <!-- <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-plus"></i></span> -->
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Employee Count" [(ngModel)]="requirement.EmployeeCount">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2" style="position:relative;">
+                <label><br /></label>
+                <div>
+                  <button mat-raised-button color="primary">Add</button>&nbsp;
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <div class="col-sm-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="text-center">Service Type</th>
+                <th class="text-center">Designation</th>
+                <th class="text-center">Rate Per Employee</th>
+                <th class="text-center">Employee Count</th>
+                <th class="text-center">Total</th>
+                <th class="text-center fixedtd">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="noOfRows" colspan="10"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <form role="form" name="reqsForm" class="well well-sm">
+          <fieldset>
+            <h5>
+              <mat-checkbox [(ngModel)]="AppoinmentDetail.ExistCompetitors" value="true">Existing Competitor
+              </mat-checkbox>
+            </h5>
+            <hr style="border-color:cadetblue" />
+            <hr />
+            <div class="row" *ngIf="AppoinmentDetail.ExistCompetitors">
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                  <label for="Cname" class="control-label col-sm-3">Client Name</label>
+                  <div class="col-sm-9">
+                    <mat-form-field class="example-full-width">
+                      <input [(ngModel)]="existingRequirement.ClientName" matInput placeholder="Client Name">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group col-sm-3">
+                  <label for="service">Service Type</label>
+                  <mat-form-field class="example-full-width">
+                    <input matInput [(ngModel)]="existingRequirement.ServiceType" placeholder="Service Type">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="designation">Designation</label>
+                  <mat-form-field class="example-full-width">
+                    <input [(ngModel)]="existingRequirement.Designation" matInput placeholder="Designation">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label for="rate">Rate Per Employee</label>
+                  <div class="input-group">
+                    <mat-form-field class="example-full-width">
+                      <input [(ngModel)]="existingRequirement.RatePerEmployee" matInput placeholder="Rate Per Employee">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label for="count">Employee Count</label>
+                  <div class="input-group">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Search by Employee">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2" style="position:relative;">
+                  <label><br /></label>
+                  <div>
+                    <button mat-raised-button color="primary">Add</button>&nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <div class="col-md-12" *ngIf="AppoinmentDetail.ExistCompetitors">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="text-center">Client Name</th>
+                <th class="text-center">Service Type</th>
+                <th class="text-center">Designation</th>
+                <th class="text-center">Rate Per Employee</th>
+                <th class="text-center">Employee Count</th>
+                <th class="text-center">Total</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="noOfRows" colspan="10"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12" style="text-align:right">
+            <button mat-raised-button color="primary">Save</button>&nbsp;
+            <button mat-raised-button color="accent" (click)="Cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

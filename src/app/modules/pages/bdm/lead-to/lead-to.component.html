@@ -1,0 +1,73 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+      <div class="card-header" id="maincard">
+        Lead To
+      </div>
+          <div class="card-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <mat-form-field>
+          <mat-select [(ngModel)]="model.selectedService" (selectionChange)="getOldLeadList()" placeholder="Select Service">
+            <mat-option *ngFor="let service of serviceList" [value]="service">
+              {{service.Name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-sm-3">
+        <mat-form-field>
+          <mat-select  [(ngModel)]="model.selectedOldEmployee"  (selectionChange)="getNewLeadList();" placeholder="Select Old Lead">
+            <mat-option *ngFor="let emp of oldLeadList" [value]="emp">
+              {{emp.EmployeeName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-3">
+        <mat-form-field>
+          <mat-select [(ngModel)]="model.selectedNewEmployee" placeholder="Select New Lead">
+            <mat-option *ngFor="let newemp of newLeadList" [value]="newemp">
+              {{newemp.EmployeeName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-3" style="text-align: right" (click)="saveClientLeadDetail()">
+        <button mat-raised-button color="primary">
+          Save</button>
+      </div>
+    </div>
+    <hr>
+    <h5>Client List</h5>
+    <br>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Client Id</th>
+              <th scope="col">Client Name</th>
+              <th scope="col">Call Type</th>
+              <th scope="col">Action</th>
+  
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of clientList;let i=index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ row.ClientId }}</td>
+              <td>{{ row.ClientName }}</td>
+              <td>{{ row.Calltype }}</td>
+              <td>
+                <mat-checkbox [(ngModel)]="row.hasPermission">Yes/No</mat-checkbox>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

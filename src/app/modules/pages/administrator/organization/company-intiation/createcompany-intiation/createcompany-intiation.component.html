@@ -1,0 +1,177 @@
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+        <div class="card-header" id="maincard">
+            Create Company Initiation
+        </div>
+
+        <div class="container-fluid" id="fixedpage">
+            <br>
+            <div class="row">
+                <div class="col-sm-10">
+
+                </div>
+                <div class="col-sm-2" style="text-align: right">
+                    <div>
+                        <button mat-raised-button (click)="backCompanyListForm()" color="accent">
+                            <mat-icon>list</mat-icon>View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+
+                <!-- <form [formGroup]="signUpForm" class="form"> -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input [(ngModel)]="model.CompanyName" name="CompanyName" required matInput
+                                placeholder="Name of the company">
+                            <mat-error> Nameofthecompany required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.CountryId" name="CountryId"
+                                (change)="GetStateName(model.CountryId)" placeholder="Select Country">
+                                <mat-option *ngFor="let i of CountryIdName" [value]="i.CountryId">{{i.CountryName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error> Country required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.StateId" name="StateId" placeholder="Select State"
+                                (change)="GetCityName(model.StateId)">
+                                <mat-option *ngFor="let i of StateIdName" [value]="i.StateId">{{i.StateName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error> StateName required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.CityId" name="CityId" placeholder="Select City"
+                                (change)="GetAreaName(model.CityId)">
+                                <mat-option *ngFor="let i of CityIdName" [value]="i.CityId">{{i.CityName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error> CityName required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.AreaId" name="AreaId" placeholder="Select Area">
+                                <mat-option *ngFor="let i of AreaIdName" [value]="i.AreaId">{{i.AreaName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error> AreaName required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <input required [(ngModel)]="model.PinCode" name="PinCode" matInput placeholder="PinCode">
+                            <mat-error> PinCode required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.ParentCompany" name="ParentCompany"
+                                placeholder="Reporting Company">
+                                <mat-option *ngFor="let i of ListCompanyArray" [value]="i.CompanyId">{{i.CompanyName}}
+                                </mat-option>
+
+                            </mat-select>
+                            <mat-error> Reporting Company required</mat-error>
+                        </mat-form-field>
+
+
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input required [(ngModel)]="model.CompanyCode" name="CompanyCode" matInput
+                                placeholder="CompanyCode">
+                            <mat-error> CompanyCode required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <input required [(ngModel)]="model.AddressLine1" name="AddressLine1" matInput
+                                placeholder="Addrees Line1">
+                            <mat-error> AddreesLine1 required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                            <input required [(ngModel)]="model.AddressLine2" name="AddressLine2" matInput
+                                placeholder="Addrees Line2">
+                            <mat-error> AddreesLine2 required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <input required [(ngModel)]="model.Email" name="Email" matInput placeholder="Company Email">
+                            <mat-error> Company Email required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <input required matInput [(ngModel)]="model.Website" name="Website" placeholder="Website"
+                                (keypress)="urlValidation($event)">
+                            <mat-error> Website required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <input required [(ngModel)]="model.PhoneNo" name="PhoneNo" matInput placeholder="phone no">
+                            <mat-error> phoneno required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                            <input required [(ngModel)]="model.FaxNo" name="FaxNo" matInput placeholder="Fax No">
+                            <mat-error> FaxNo required</mat-error>
+                        </mat-form-field>
+
+
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.OrganizationLevelId" name="OrganizationLevelId"
+                                placeholder="Organization Level">
+                                <mat-option *ngFor="let i of OrganizationlevelIdName" [value]="i.OrganizationLevelId">
+                                    {{i.LevelName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error> OrganizationLevel required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.TypeId" name="TypeId"
+                                placeholder="Type of organization">
+                                <mat-option *ngFor="let i of Organizationtypes" [value]="i.TypeId">{{i.OwnershipName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error> Type of organization required</mat-error>
+                        </mat-form-field>
+                        <div class="col-lg-4 col-md-4">
+                            <label class="example-margin">ImageUpload:</label>
+                            <br>
+                            <img [src]="API_URL + '/UploadFile/'+ model.CompanyLogo"
+                                style="width: 150px;height: 150px;">
+                            <br /><br>
+                            <input type="file" [(ngModel)]="model.CompanyLogo" name="CompanyLogo" value=""
+                                (change)="fileUpload($event)" required placeholder="ImageUpload"><br><br>
+                        </div>
+
+
+                        <mat-form-field class="example-full-width">
+                            <mat-select required [(ngModel)]="model.BusinessId" name="BusinessId"
+                                placeholder="Nature Of Business">
+                                <mat-option *ngFor="let i of NatureOfBusinessIdName" [value]="i.BusinessId">
+                                    {{i.BusinessName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error> Nature Of Business required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" style="text-align: right">
+                        <div class="matbutton">
+                            <button *ngIf="!isEditing" mat-raised-button color="primary"
+                                (click)="saveCompanyDetails()">Save</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button *ngIf="isEditing" mat-raised-button color="primary"
+                                (click)="saveCompanyDetails()">Update</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button (click)="backCompanyListForm()" mat-raised-button color="warn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- </form> -->
+
+            </div>
+
+
+        </div>

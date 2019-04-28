@@ -1,0 +1,341 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+      Contract Detail
+    </div>
+    <div class="card-body">
+        <div class="AddContract" *ngIf='contractView'>
+            <div class="row" *ngIf="isEditing">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <mat-slide-toggle [(ngModel)]="addContractDetail.Active">Active</mat-slide-toggle>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="addContractDetail.Service" (ngModelChange)="getDesignation()"
+                    placeholder="Select Service">
+                    <mat-option *ngFor="let service of ServiceData" [value]="service.DepartmentId">
+                      {{service.DepartmentName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="addContractDetail.Designation" placeholder="Select Designation">
+                    <mat-option *ngFor="let designation of DesignationData" [value]="designation.DesignationId">
+                      {{designation.DesignationName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addContractDetail.RatePerEmployee" placeholder="Rate Per Employee">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addContractDetail.EmployeeCount" placeholder="Employee Count">
+                </mat-form-field>
+              </div>
+            </div>
+          
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-12" style="text-align:right">
+                <button mat-raised-button (click)="AddContract()" color="primary">Save</button>&nbsp;
+                <button mat-raised-button (click)="resetContractScreen()" color="accent">Cancel</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="Agreement" *ngIf='agreementView'>
+            <br>
+            <div class="row" *ngIf="isEditing1">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <mat-slide-toggle [(ngModel)]="addConsumetDetail.Active">Active</mat-slide-toggle>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-5">
+                <div class="row">
+                  <div class="col-sm-6" style="font-size: 12px;text-align: left;padding-top:10px">
+                    <label>Whether Supplied by Customer</label>
+                  </div>
+                  <div class="col-sm-6" style="padding-top:10px">
+                    <mat-radio-group [(ngModel)]='addConsumetDetail.SuppliedByCustomer'
+                      style="font-size: 12px;text-align: center;">
+                      <mat-radio-button [checked]="addConsumetDetail.SuppliedByCustomer == 1" [value]='1'>Yes</mat-radio-button>
+                      &nbsp;
+                      <mat-radio-button [checked]="addConsumetDetail.SuppliedByCustomer == 0" [value]='0'>No</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-7">
+                <div class="row">
+                  <div class="col-sm-6" style="font-size: 12px;text-align: left;padding-top:10px">
+                    <label>If Included in the contract for what amount</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <mat-form-field class="example-full-width">
+                      <input matInput [(ngModel)]="addConsumetDetail.ContractAmount"
+                        (keypress)="onEnterNumber($event,99999999,true)" (input)="onInput()" style="text-align:right"
+                        placeholder="0.00">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-3">
+                <div class="row">
+                  <div class="col-sm-12" style="font-size: 12px;text-align: left;">
+                    <label>Statutory & Regularity Requirement</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <div class="row">
+                  <div class="col-sm-1" style="font-size: 12px;text-align: center;">
+                    <mat-checkbox #pf (change)='addConsumetDetail.PF = pf.checked === true? 1 : 0'>PF</mat-checkbox>
+                  </div>
+                  <div class="col-sm-1" style="font-size: 12px;text-align: center;">
+                    <mat-checkbox #esic (change)='addConsumetDetail.ESIC = gratuity.esic === true? 1 : 0'>ESI</mat-checkbox>
+                  </div>
+                  <div class="col-sm-2" style="font-size: 12px;text-align: center;">
+                    <mat-checkbox #uni (change)='addConsumetDetail.Uniform = uni.checked === true? 1 : 0'>Uniform</mat-checkbox>
+                  </div>
+                  <div class="col-sm-2" style="font-size: 12px;text-align: center;">
+                    <mat-checkbox #lww (change)='addConsumetDetail.LeaveWithWages = lww.checked === true? 1 : 0'>Leave with Wages
+                    </mat-checkbox>
+                  </div>
+                  <div class="col-sm-2" style="font-size: 12px;text-align: center;">
+                    <mat-checkbox #bonus (change)='addConsumetDetail.Bonus = bonus.checked === true? 1 : 0'>Bonus</mat-checkbox>
+                  </div>
+                  <div class="col-sm-2" style="font-size: 12px;text-align: center;">
+                    <mat-checkbox #con (change)='addConsumetDetail.Conveyance = con.checked === true? 1 : 0'>Conveyance
+                    </mat-checkbox>
+                  </div>
+                  <div class="col-sm-2" style="font-size: 12px;text-align: center;">
+                    <mat-checkbox #gratuity (change)='addConsumetDetail.Gratuity = gratuity.checked === true? 1 : 0'>Gratuity
+                    </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-2">
+                <div class="row">
+                  <div class="col-sm-12" style="font-size: 12px;text-align: left;padding-top:10px">
+                    <label>Contract Value</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addConsumetDetail.ContractAmount" (keypress)="onEnterNumber($event,99999999,true)"
+                    (input)="onInput()" style="text-align:right">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1">
+                <i class="material-icons">
+                  add
+                </i>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input matInput readonly='true' [(ngModel)]="addConsumetDetail.ServiceTax" style="text-align:right"
+                    placeholder="GST">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <div class="row">
+                  <div class="col-sm-12" style="font-size: 12px;text-align: right;padding-top:10px">
+                    <label>Total</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <input matInput readonly='true' [(ngModel)]="addConsumetDetail.TotalAmount" style="text-align:right"
+                    placeholder="Total Amount">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" style="margin-top:3.2%">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addConsumetDetail.ServiceCharge" style="text-align:right"
+                    placeholder="Service Charge">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <textarea matInput [(ngModel)]="addConsumetDetail.Remarks" style="height:70px;"
+                    placeholder="Remarks"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4" style="text-align:right;margin-top:5%">
+                <button mat-raised-button (click)="addConsumeDetails()" color="primary">Save</button>&nbsp;
+                <button mat-raised-button (click)="resetConsumeScreen()" color="accent">Cancel</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="list" *ngIf="!contractView && !agreementView">
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-2">
+                <div class="row">
+                  <div class="col-sm-12" style="font-size: 12px;text-align: left;padding-top:10px">
+                    <label>Customer</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="customer" (selectionChange)="getAllContractDetail()" placeholder="Customer Name">
+                    <mat-option *ngFor="let customer of AllCustomerData" [value]="customer">
+                      {{customer.CustomerName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <button (click)="contractView = !contractView" [disabled]='customer === undefined'
+                  style="background-color:teal;color:white" mat-raised-button>
+                  <i class="material-icons" style="font-size:20px">add</i> Add Contract Detail</button>
+              </div>
+              <div class="col-sm-3">
+                <div class="row">
+                  <div class="col-sm-12" style="font-size: 12px;text-align: right;padding-top:10px">
+                    <label>If you add Agreement details</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2" style="text-align: right">
+                <button (click)="agreementView = !agreementView" [disabled]='customer === undefined'
+                  style="background-color:teal;color:white" mat-raised-button>
+                  <i class="material-icons" style="font-size:20px">add</i> Add</button>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <h5>Contract Details</h5>
+              <br>
+              <br>
+              <div class="col-sm-12">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Contract ID</th>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Rate Per Employee</th>
+                      <th scope="col">Employee Count</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let contract of ContractData;let i = index'>
+                      <td>{{contract.ContractId}}</td>
+                      <td>{{contract.DesignationName}}</td>
+                      <td>{{contract.RatePerEmployee}}</td>
+                      <td>{{contract.EmployeeCount}}</td>
+                      <td>
+                        <mat-chip *ngIf='contract.Active' style="color:blue" color="accent">Active</mat-chip>
+                        <mat-chip *ngIf='!contract.Active' style="color:red" color="primary">In Active</mat-chip>
+                      </td>
+                      <td>
+                        <i color="primary" class="material-icons" (click)="editContractDetails(contract)"
+                          style="color:blue;cursor: pointer;font-size: 16px;">edit</i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <h5>Agreement Details</h5>
+              <br>
+              <br>
+              <div class="col-sm-12">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Contract ID</th>
+                      <th scope="col">Customer</th>
+                      <th scope="col">Supplied By Customer</th>
+                      <th scope="col">PF</th>
+                      <th scope="col">ESIC</th>
+                      <th scope="col">Uniform</th>
+                      <th scope="col">LeaveWithWages</th>
+                      <th scope="col">Bonus</th>
+                      <th scope="col">Conveyance</th>
+                      <th scope="col">Gratuity</th>
+                      <th scope="col">Total Amount</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let consume of ConsumeData;let i = index'>
+                      <td>{{consume.ContractId}}</td>
+                      <td>{{consume.CustomerName}}</td>
+                      <td>
+                        <mat-chip *ngIf='consume.SuppliedByCustomer' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.SuppliedByCustomer' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>
+                        <mat-chip *ngIf='consume.PF' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.PF' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>
+                        <mat-chip *ngIf='consume.ESIC' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.ESIC' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>
+                        <mat-chip *ngIf='consume.Uniform' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.Uniform' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>
+                        <mat-chip *ngIf='consume.LeaveWithWages' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.LeaveWithWages' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>
+                        <mat-chip *ngIf='consume.Bonus' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.Bonus' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>
+                        <mat-chip *ngIf='consume.Conveyance' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.Conveyance' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>
+                        <mat-chip *ngIf='consume.Gratuity' style="color:blue" color="accent">Yes</mat-chip>
+                        <mat-chip *ngIf='!consume.Gratuity' style="color:red" color="primary">No</mat-chip>
+                      </td>
+                      <td>{{consume.TotalAmount}}</td>
+                      <td>
+                        <mat-chip *ngIf='consume.Active' style="color:blue" color="accent">Active</mat-chip>
+                        <mat-chip *ngIf='!consume.Active' style="color:red" color="primary">In-Active</mat-chip>
+                      </td>
+                      <td>
+                        <i color="primary" class="material-icons" (click)="editConsumeDetails(consume)"
+                          style="color:blue;cursor: pointer;font-size: 16px;">edit</i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
+

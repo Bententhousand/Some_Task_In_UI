@@ -1,0 +1,286 @@
+<!-- <simple-notifications [options]="options"></simple-notifications> -->
+
+<div class="page-body">
+  <div class="row">
+    <div class="col-lg-12 col-md-12" style="padding-left:6%;padding-right:6%">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h4 class="text-c-yellow">{{FollowUp}}</h4>
+                  <h6 class="text-muted m-b-0" [routerLink]="['/supplier_reg']">Follow</h6>
+                </div>
+                <div class="col-4 text-right">
+                  <i class="fa fa-phone f-28"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-c-yellow">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <!-- <p class="text-white m-b-0">% change</p> -->
+                </div>
+                <!-- <div class="col-3 text-right">
+                        <i class="feather icon-trending-up text-white f-16"></i>
+                      </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h4 class="text-c-green">{{Cold}}</h4>
+                  <h6 class="text-muted m-b-0">COLD</h6>
+                </div>
+                <div class="col-4 text-right">
+                  <i class="fa fa-bitbucket f-28"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-c-green">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <!-- <p class="text-white m-b-0">% change</p> -->
+                </div>
+                <div class="col-3 text-right">
+                  <!-- <i class="feather icon-trending-up text-white f-16"></i> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h4 class="text-c-red">{{Hot}}</h4>
+                  <h6 class="text-muted m-b-0">HOT</h6>
+                </div>
+                <div class="col-4 text-right">
+                  <i class="fa fa-play f-28"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-c-red">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <!-- <p class="text-white m-b-0">% change</p> -->
+                </div>
+                <div class="col-3 text-right">
+                  <!-- <i class="feather icon-trending-down text-white f-16"></i> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h4 class="text-c-blue">{{QuoteSent}}</h4>
+                  <h6 class="text-muted m-b-0">Quote Sent</h6>
+                </div>
+                <div class="col-4 text-right">
+                  <i class="fa fa-send-o f-28"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-c-blue">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <!-- <p class="text-white m-b-0">% change</p> -->
+                </div>
+                <div class="col-3 text-right">
+                  <!-- <i class="feather icon-trending-down text-white f-16"></i> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h4 class="text-c-yellow">{{Customer}}</h4>
+                  <h6 class="text-muted m-b-0" [routerLink]="['/supplier_reg']">SUCCESS</h6>
+                </div>
+                <div class="col-4 text-right">
+                  <i class="fa fa-thumbs-o-up f-28"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-c-yellow">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <!-- <p class="text-white m-b-0">% change</p> -->
+                </div>
+                <!-- <div class="col-3 text-right">
+                        <i class="feather icon-trending-up text-white f-16"></i>
+                      </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h4 class="text-c-green">{{NewClient}}</h4>
+                  <h6 class="text-muted m-b-0">NEW SURVEY</h6>
+                </div>
+                <div class="col-4 text-right">
+                  <i class="ion ion-ios-people-outline f-28"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-c-green">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <!-- <p class="text-white m-b-0">% change</p> -->
+                </div>
+                <div class="col-3 text-right">
+                  <!-- <i class="feather icon-trending-up text-white f-16"></i> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h4 class="text-c-red">{{TotalAmount}}</h4>
+                  <h6 class="text-muted m-b-0">TOTAL AMOUNT</h6>
+                </div>
+                <div class="col-4 text-right">
+                  <i class="fa fa-inr f-28"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-c-red">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <!-- <p class="text-white m-b-0">% change</p> -->
+                </div>
+                <div class="col-3 text-right">
+                  <!-- <i class="feather icon-trending-down text-white f-16"></i> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12" style="padding-left:6%;padding-right:6%">
+      <app-card>
+        <div class="row">
+          <div class="col-lg-2 text-center"></div>
+          <div class="col-lg-3 text-center">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="graph.FromDate" (click)="picker.open()" readonly
+                placeholder="From Date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 text-center">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker1" [(ngModel)]="graph.ToDate" (click)="picker1.open()" readonly
+                placeholder="To Date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 text-center" *ngIf="Position == 1">
+            <mat-form-field>
+              <mat-select [(ngModel)]="graph.selectedEmployee" placeholder="Select Employee">
+                <mat-option *ngFor="let emp of PositionList" [value]="emp">
+                  {{emp.EmployeeName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-3 text-center" *ngIf="Position == 1 ">
+            <button type="button" [disabled]="graph.selectedEmployee == undefined && (graph.FromDate == undefined || graph.ToDate == undefined)"
+              (click)="ShowGraph(graph)" class="btn btn-primary"><i class="material-icons">send</i>GO</button>
+          </div>
+          <div class="col-lg-3 text-center" *ngIf="Position != 1 ">
+            <button type="button" [disabled]="graph.FromDate == undefined || graph.ToDate == undefined" (click)="ShowGraph(graph)"
+              class="btn btn-primary"><i class="material-icons">send</i>GO</button>
+          </div>
+        </div>
+      </app-card>
+    </div>
+    <!-- <div class="col-lg-12 col-md-12" style="padding-left:6%;padding-right:6%">
+      <app-card [title]="'Report'" [classHeader]="'true'" [headerClass]="'borderless'">
+        <span class="code-header"><span class="text-muted">For more details about usage, please refer <a href="https://www.amcharts.com/online-store/"
+              target="_blank">amCharts</a> licences.</span></span>
+        <div id="seo-ecommerce-barchart" style="height: 350px"></div>
+      </app-card>
+    </div> -->
+    <div class="col-lg-12 col-md-12" style="padding-left:6%;padding-right:6%">
+      <app-card>
+        <div>
+          <div style="display: block">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+              [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+          </div>
+          <button (click)="randomize()">Update</button>
+        </div>
+      </app-card>
+    </div>
+    <div class="col-lg-12 col-md-12" style="padding-left:6%;padding-right:6%">
+      <app-card>
+        <div class="col-sm-2">
+          <mat-form-field>
+            <mat-select placeholder="Select Group">
+              <mat-option *ngFor="let emp of OldLeadList" [value]="emp">
+                {{emp.EmployeeName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <table class="table table-sm table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Employee ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Designation</th>
+              <th scope="col">City</th>
+              <th scope="col">State</th>
+              <th scope="col">Month/Year</th>
+              <th scope="col">Target</th>
+              <th scope="col">Target Achieve</th>
+              <th scope="col">Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of EmployeeTargetForGrid;let i=index">
+              <td class="text-center">{{row.EmployeeId}}</td>
+              <td class="text-center">{{row.EmployeeName}}</td>
+              <td class="text-center">{{row.Designation}}</td>
+              <td class="text-center">{{row.CityName}}</td>
+              <td class="text-center">{{row.StateName}}</td>
+              <td class="text-center">{{row.Month +'/'+ row.Year}}</td>
+              <td class="text-center">{{row.TargetAmount}}</td>
+              <td class="text-center">{{row.ActualAmount}}</td>
+              <td class="text-center">{{row.Balance}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </app-card>
+    </div>
+  </div>
+</div>

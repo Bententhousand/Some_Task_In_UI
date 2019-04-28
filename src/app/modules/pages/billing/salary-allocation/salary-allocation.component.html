@@ -1,0 +1,159 @@
+<div class="container-fluid">
+    <div class="card" style="overflow-x:scroll">
+      <div class="card-header">
+        <h5>Salary Allocation</h5>
+      </div>
+      <div class="card-body">
+        <div class="card">
+          <div class="card-body">
+<div class="row">
+  <div class="col-sm-2">
+    <mat-form-field>
+      <mat-select [(ngModel)]="objSalaryAllocation.selectedCompany" (selectionChange)='getEmployeeType()' placeholder="Company Name">
+
+        <mat-option *ngFor="let company of companyList" [value]="company.CompanyId">
+          {{company.CompanyName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-2">
+    <mat-form-field>
+      <mat-select [(ngModel)]="objSalaryAllocation.selectedEmployeeType" (selectionChange)='getDepartment()'
+        placeholder="Employee Type">
+
+        <mat-option *ngFor="let emptype of employeeTypeList" [value]="emptype.Id">
+          {{emptype.Name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-2">
+    <mat-form-field>
+      <mat-select [(ngModel)]="objSalaryAllocation.selectedDepartment" (selectionChange)='getDesignation()' placeholder="Department">
+
+        <mat-option *ngFor="let dept of ServiceMasterList" [value]="dept.DepartmentId">
+          {{dept.DepartmentName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-2">
+    <mat-form-field>
+      <mat-select [(ngModel)]="objSalaryAllocation.selectedDesignation" (selectionChange)='getEmployee()' placeholder="Designation">
+
+        <mat-option *ngFor="let designation of DesignationList" [value]="designation.DesignationId">
+          {{designation.DesignationName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-2">
+    <mat-form-field>
+      <mat-select [(ngModel)]="objSalaryAllocation.selectedEmployee" (selectionChange)='getSalaryComponent()'
+        placeholder="Employee">
+        <ng-container *ngIf='objSalaryAllocation.selectedEmployeeType === 1'>
+          <mat-option *ngFor="let emp of EmployeeList" [value]="emp.EmployeeId">
+            {{emp.EmployeeNo + '-' + emp.EmployeeName}}
+          </mat-option>
+        </ng-container>
+        <ng-container *ngIf='objSalaryAllocation.selectedEmployeeType === 2'>
+          <mat-option *ngFor="let emp of EmployeeList" [value]="emp.ManpowerId">
+            {{emp.ManpowerId + '-' + emp.ManpowerName}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-2">
+    <button mat-raised-button color="primary">
+      <i class="material-icons" style="font-size:20px">arrow_right_alt</i> Submit</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-sm-3">
+  </div>
+  <div class="col-sm-3">
+    <mat-form-field>
+      <input matInput [(ngModel)]="objSalaryAllocation.selectedDate" [matDatepicker]="picker" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-3">
+    <button mat-raised-button color="accent" (click)='viewSalary()'>View</button>
+  </div>
+  <div class="col-sm-3">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Components</th>
+          <th scope="col">Type</th>
+          <th scope="col">From</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Total</th>
+          <th scope="col">
+            <mat-checkbox></mat-checkbox>
+          </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let table of SalaryCompensateList'>
+          <td> {{table.Name}} </td>
+          <td>
+            <mat-form-field style="width:120px;margin-top:-10px">
+              <mat-select>
+                <mat-option disabled='true'> Select Type </mat-option>
+                <mat-option value="Number">
+                  Number
+                </mat-option>
+                <mat-option value="Percentage">
+                  Percentage
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field style="width:120px;margin-top:-10px">
+              <mat-select>
+                <mat-option *ngFor="let deduction of SalaryList" [value]="deduction.FromDeduction">
+                  {{deduction.FromDeductionName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="Enter Amount">
+            </mat-form-field>
+          </td>
+          <td>
+            Total Amount
+          </td>
+          <td>
+            <mat-checkbox></mat-checkbox>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12" style="text-align:right">
+    <button mat-raised-button color="primary">Save</button>&nbsp;
+    <button mat-raised-button color="accent">Cancel</button>
+  </div>
+</div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>

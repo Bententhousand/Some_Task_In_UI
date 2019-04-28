@@ -1,0 +1,79 @@
+<!-- <div mat-dialog-content style="width:100%">
+
+  <div>
+      <label>Name :&nbsp; <p>{{_data.element.ManpowerName}}</p></label>
+  </div>
+  <div>
+    <label>Date :&nbsp; <p>{{setDate | date:'dd/MM/yyyy'}}</p></label>
+</div>
+  <mat-form-field>
+    <mat-select placeholder="Attendance" [(ngModel)]="setStatus">
+      <mat-option *ngFor="let status of statusData" [value]="status.StatusId">
+       <p *ngIf="status.StatusName == 'P'">Present</p>
+       <p *ngIf="status.StatusName == 'A'">Absent</p>
+       <p *ngIf="status.StatusName == 'WO'">Week Off</p>
+       <p *ngIf="status.StatusName == 'NH'">National Holiday</p>
+       <p *ngIf="status.StatusName == 'HD'">Holiday</p>
+       <p *ngIf="status.StatusName == 'CL'">Casual Leave</p>
+       <p *ngIf="status.StatusName == 'CO'">Comp Off</p>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="modifyAttendance()" style="color:#148F77;border-color:#148F77">Update</button>
+  <button mat-button (click)="closeDialog()" style="color:#FF5733;border-color:#FF5733">Cancel</button>
+</div> -->
+
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0;">
+    <div class="card-header" id="maincard">
+      Attendance
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-6">
+              <label>Name :</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{_data.element.ManpowerName}}</label>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-6">
+              <label>Date :</label>
+            </div>
+            <div class="col-sm-6">
+              <label>{{setDate | date:'dd/MM/yyyy'}}</label>
+            </div>
+          </div>
+          <br>
+          <mat-form-field>
+            <mat-select placeholder="Attendance" [(ngModel)]="setStatus">
+              <mat-option *ngFor="let status of statusData" [value]="status.StatusId">
+                <p *ngIf="status.StatusName == 'P'">Present</p>
+                <p *ngIf="status.StatusName == 'A'">Absent</p>
+                <p *ngIf="status.StatusName == 'WO'">Week Off</p>
+                <p *ngIf="status.StatusName == 'NH'">National Holiday</p>
+                <p *ngIf="status.StatusName == 'HD'">Holiday</p>
+                <p *ngIf="status.StatusName == 'CL'">Casual Leave</p>
+                <p *ngIf="status.StatusName == 'CO'">Comp Off</p>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="row" style="margin-top:1%">
+            <div class="col-sm-12" style="text-align:right">
+              <button mat-button color="primary" (click)="modifyAttendance()">Update</button>
+              <button mat-button color="warn" (click)="closeDialog()">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

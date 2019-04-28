@@ -1,0 +1,160 @@
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+        <div class="card-header" id="maincard">
+            Create User Account
+        </div>
+
+        <div class="container-fluid" id="fixedpage">
+
+
+            <div class="row" style="margin-top:3%">
+                <div class="col-sm-10">
+
+                </div>
+                <div class="col-sm-2" style="text-align: right;padding-right:30px">
+                    <div>
+                        <button mat-raised-button (click)="backUserListForm()" color="accent">
+                            <mat-icon>list</mat-icon>
+                            View
+                        </button>
+                    </div>
+                </div>
+            </div><br>
+
+
+            <div class="card-body">
+
+                <form [formGroup]="signUpForm" class="form">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <mat-select [(ngModel)]="user.CompanyId" formControlName="CompanyId" required
+                                    placeholder="Name of the Company" (ngModelChange)="viewDepartmentDetails(element)">
+                                    <mat-option *ngFor="let company of ListCompanyIntiation"
+                                        [value]="company.CompanyId">{{company.CompanyName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error> NameoftheCompany required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <mat-select [(ngModel)]="user.DepartmentId" formControlName="DepartmentId"
+                                    (ngModelChange)="viewDesignationByDeptId(user.DepartmentId)" required
+                                    placeholder="Name of the Department">
+                                    <mat-option *ngFor="let dept of ListDepartment" [value]="dept.DepartmentId">
+                                        {{dept.DepartmentName}} </mat-option>
+
+                                </mat-select>
+                                <mat-error> Name of the Department required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <mat-select [(ngModel)]="user.DesignationId" formControlName="DesignationId"
+                                    (ngModelChange)="viewEmployeeByDesignationId(user.DesignationId)" required
+                                    placeholder="Designation">
+                                    <mat-option *ngFor="let desgn of ListDesignation" [value]="desgn.DesignationId">
+                                        {{desgn.DesignationName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error> Designation required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+
+                                <mat-select formControlName="RefId" [(ngModel)]="user.RefId" required
+                                    placeholder="Select Employee">
+                                    <mat-option *ngFor="let emp of ListEmployees" [value]="emp.EmployeeId">
+                                        {{emp.FirstName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error> Employee required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+
+                                <mat-select formControlName="RoleId" [(ngModel)]="user.RoleId" placeholder="Role Name"
+                                    required>
+                                    <mat-option *ngFor="let role of ListRole" [value]="role.RoleId">{{role.RoleName}}
+                                    </mat-option>
+
+                                </mat-select>
+                                <mat-error> Role Name required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="UserName" [(ngModel)]="user.Username"
+                                    (input)="checkUserName($event.target.user)" matInput required
+                                    placeholder="UserName">
+                                <mat-error> UserName required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="PassWord" [(ngModel)]="user.PassWord" matInput type="password"
+                                    required placeholder="PassWord">
+                                <mat-error> PassWord required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="ConfirmPassWord" [(ngModel)]="user.ConfirmPassWord" matInput
+                                    type="password" required placeholder="Confirm PassWord">
+                                <mat-error> Confirm PassWord required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="FirstName" [(ngModel)]="user.FirstName" matInput required
+                                    placeholder="First Name ">
+                                <mat-error> First Name required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="LastName" matInput [(ngModel)]="user.LastName" required
+                                    placeholder="Last Name ">
+                                <mat-error> Last Name required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="EmailId" matInput [(ngModel)]="user.EmailId"
+                                    (change)="checkEmailId(user.mailid)" required placeholder="Official Email ">
+                                <mat-error> Official Email required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </form>
+
+                <br>
+                <div class="row">
+                    <div class="col-sm-12" style="text-align: right">
+                        <div class="matbutton">
+                            <button *ngIf="!isEditing" mat-raised-button color="primary"
+                                (click)="signUp()">Save</button>
+                            &nbsp;
+                            <button *ngIf="isEditing" mat-raised-button color="primary"
+                                (click)="signUp()">Update</button>
+                            &nbsp;
+                            <button (click)="backUserListForm()" mat-raised-button color="warn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>

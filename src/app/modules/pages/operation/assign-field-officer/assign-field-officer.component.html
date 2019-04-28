@@ -1,0 +1,88 @@
+
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+        Assign Field Officer
+    </div>
+    <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="assignFieldOfficer.EmployeeId" (ngModelChange)="getFieldOfficer()"
+                placeholder="Field Officer">
+                <mat-option *ngFor="let employee of employeeData" [value]="employee.EmployeeId">
+                  {{employee.EmployeeName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="assignFieldOfficer.CustomerId" (ngModelChange)="getArea()"
+                placeholder="Customer Name">
+                <mat-option *ngFor="let customer of customerData" [value]="customer.CustomerId">
+                  {{customer.CustomerName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="assignFieldOfficer.BranchId" (ngModelChange)="getSite()" placeholder="Branch">
+                <mat-option *ngFor="let area of areaData" [value]="area.BranchId">
+                  {{area.BranchName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <!-- <mat-form-field [(ngModel)]="assignFieldOfficer.Site" class="example-full-width">
+    <input matInput placeholder="Site">
+  </mat-form-field> -->
+            <mat-form-field>
+              <mat-select placeholder="Select a Site" [(ngModel)]="assignFieldOfficer.Site" multiple>
+                <mat-option *ngFor="let site of siteData" [value]="site">{{site.SiteName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-12" style="text-align:right">
+            <button mat-raised-button (click)="addFieldOfficer()" color="primary">Save</button>&nbsp;
+            <button mat-raised-button (click)="onClear()" color="accent">Clear</button>
+          </div>
+        </div>
+
+        <hr>
+        <br>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Branch</th>
+                  <th scope="col">Site</th>
+                  <th scope="col">Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let field of fieldOfficerData">
+                  <td>{{field.CustomerName}}</td>
+                  <td>{{field.BranchName}}</td>
+                  <td>{{field.SiteName}}</td>
+                  <td>
+                    <i color="warn" style="color:red;cursor: pointer;" (click)="removeFieldOfficer(field)"
+                      class="material-icons">delete_forever</i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+

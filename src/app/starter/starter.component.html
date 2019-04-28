@@ -1,0 +1,207 @@
+<!-- ============================================================== -->
+<!-- Simple four boxes Row -->
+<!-- ============================================================== -->
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <!-- column -->
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+<div class="row" style="padding-top:10px;">
+        <div class="col-sm-3">
+                <div class="card">
+                    <div class="card--cap violet"></div>
+                        <div class="row">
+                            <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#6600cc">local_phone</mat-icon></div>
+                                <div class="col-sm-10">
+                                    <div class="card--body">
+                                        <h2 class="card--header" style="color:#6600cc">FOLLOW</h2>
+                                        <p>{{FollowUp}}</p>
+                                    </div>
+                                </div>
+                        </div>
+                </div>
+            </div>
+
+    <div class="col-sm-3">
+            <div class="card">
+                <div class="card--cap blue"></div>
+                    <div class="row">
+                        <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#378ae9">local_drink</mat-icon></div>
+                            <div class="col-sm-10">
+                                <div class="card--body">
+                                    <h2 class="card--header" style="color:#378ae9">COLD</h2>
+                                    <p>{{Cold}}</p>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+    
+    <div class="col-sm-3">
+            <div class="card">
+                <div class="card--cap red"></div>
+                    <div class="row">
+                        <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#e93737">whatshot</mat-icon></div>
+                            <div class="col-sm-10">
+                                <div class="card--body">
+                                    <h2 class="card--header" style="color:#e93737">HOT</h2>
+                                    <p>{{Hot}}</p>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card--cap orange"></div>
+                <div class="row">
+                    <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#ff9900">near_me</mat-icon></div>
+                        <div class="col-sm-10">
+                            <div class="card--body">
+                                <h2 class="card--header" style="color:#ff9900">QUOTE SENT</h2>
+                                <p>{{QuoteSent}}</p>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top:30px;">
+        <div class="col-sm-3">
+                <div class="card">
+                    <div class="card--cap darkgreen"></div>
+                        <div class="row">
+                            <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#009900">thumb_up_alt</mat-icon></div>
+                                <div class="col-sm-10">
+                                    <div class="card--body">
+                                        <h2 class="card--header" style="color:#009900">SUCCESS</h2>
+                                        <p>{{Customer}}</p>
+                                    </div>
+                                </div>
+                        </div>
+                </div>
+            </div>
+
+    <div class="col-sm-3">
+            <div class="card">
+                <div class="card--cap green"></div>
+                    <div class="row">
+                        <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#1fad5c">supervisor_account</mat-icon></div>
+                            <div class="col-sm-10">
+                                <div class="card--body">
+                                    <h2 class="card--header" style="color:#1fad5c">New SURVEY</h2>
+                                    <p>{{NewClient}}</p>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+    
+    <div class="col-sm-3">
+            <div class="card">
+                <div class="card--cap darkpink"></div>
+                    <div class="row">
+                        <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#cc0066">attach_money</mat-icon></div>
+                            <div class="col-sm-10">
+                                <div class="card--body">
+                                    <h2 class="card--header" style="color:#cc0066">TOTAL AMOUNT</h2>
+                                    <p>{{TotalAmount}}</p>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card--cap pink"></div>
+                <div class="row">
+                    <div class="col-sm-2" style="top:12px; left:15px;" ><mat-icon style="color:#ff0066">receipt</mat-icon></div>
+                        <div class="col-sm-10">
+                            <div class="card--body">
+                                <h2 class="card--header" style="color:#ff0066">Sample</h2>
+                                <p>{{sample}}0</p>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+     
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <mat-form-field>
+                    <input matInput readonly [matDatepicker]="picker" placeholder="From date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+                <mat-form-field>
+                    <input matInput readonly [matDatepicker]="picker1" placeholder="To date">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+                <button mat-raised-button color="primary">GO</button>
+            </div>
+            <div class="col-sm-2">
+                <div class="col-sm-2">
+                    <mat-form-field>
+                        <mat-select placeholder="Select Group">
+                            <mat-option>
+                                Select Group
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+        <br>
+        <mat-card>
+            <mat-card-content>
+                <!-- Row -->
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card" id="top">
+                                <div class="card-body">
+                                    <div style="display: block;">
+                                        <canvas baseChart width="600" height="300" [datasets]="lineChartData"
+                                            [labels]="lineChartLabels" [options]="lineChartOptions"
+                                            [colors]="lineChartColors" [legend]="lineChartLegend"
+                                            [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+                                            (chartClick)="chartClicked($event)"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-bottom: 10px;width:100%">
+                            <div class="card" id="top">
+                                <div class="card-body" style="height: 262px;overflow: auto">
+                                    <table class="table table-striped" style="width:100%">
+                                        <tr>
+                                            <th *ngFor="let label of lineChartLabels">{{label}}</th>
+                                        </tr>
+                                        <tr *ngFor="let d of lineChartData">
+                                            <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- column -->
+</div>

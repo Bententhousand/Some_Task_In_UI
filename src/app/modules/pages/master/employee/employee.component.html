@@ -1,0 +1,446 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+      Employee
+    </div>
+    <div class="card-body">
+      <div *ngIf='!viewFlag' class="new">
+        <div class="row" *ngIf="isEditing">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <mat-slide-toggle [(ngModel)]="employeeDetail.Active">Active</mat-slide-toggle>
+          </div>
+          <div class="col-sm-4"></div>
+
+        </div>
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.FirstName" matInput placeholder="First Name">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.LastName" matInput placeholder="Last Name">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.FatherName" matInput placeholder="Father Name">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3" style="text-align: right;padding-top:10px;">
+            <mat-radio-group [(ngModel)]="employeeDetail.Gender" style="font-size: 12px;">
+              <mat-radio-button value='Male'>Male</mat-radio-button>&nbsp;
+              <mat-radio-button value='Female'>Female</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-3">
+            <mat-form-field>
+              <input matInput [(ngModel)]="employeeDetail.DateOfBirth" [matDatepicker]="picker" placeholder="DOB">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input matInput [(ngModel)]="employeeDetail.ContactNo" placeholder="Contact No">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input matInput [(ngModel)]="employeeDetail.Email" placeholder="Email">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3" style="text-align: right;padding-top:10px;">
+            <div>
+              <mat-slide-toggle [(ngModel)]="employeeDetail.MedicalExam" style="font-size: 12px;">Medical Exam
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="employeeDetail.CompanyId" (ngModelChange)="getDesignation()"
+                placeholder="Select Company" name="Company">
+                <mat-option *ngFor="let company of CompanyData" [value]="company.CompanyId">
+                  {{company.CompanyName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="employeeDetail.DesignationId" (ngModelChange)="getReportTo()"
+                placeholder="Select Designation" name="Designation">
+                <mat-option *ngFor="let designation of designationData" [value]="designation.DesignationId">
+                  {{designation.DesignationName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="employeeDetail.ReportTo" placeholder="Select Report To">
+                <mat-option *ngFor="let report of reportData" [value]="report.EmployeeId">
+                  {{report.EmployeeName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input matInput [(ngModel)]="employeeDetail.NativePlace" placeholder="Native Place">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <mat-form-field>
+              <textarea [(ngModel)]="employeeDetail.CurrentAddress" style="height:70px" matInput
+                placeholder="Current Address"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6" style="text-align: center;padding-top:50px;">
+            <mat-checkbox #ifSelect
+              (change)="employeeDetail.PermanentAddress = ifSelect.checked === true ? employeeDetail.CurrentAddress : ''"
+              style="text-align: center;font-size:12px;">Select if Permanant address is same as Current address
+            </mat-checkbox>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <textarea [(ngModel)]="employeeDetail.PermanentAddress" style="height:70px" matInput
+                placeholder="Permanant Address"></textarea>
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="employeeDetail.State" (ngModelChange)="getAllCity()" placeholder="Select State"
+                name="State">
+                <mat-option *ngFor="let state of stateData" [value]="state.StateId">
+                  {{state.StateName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="employeeDetail.City" placeholder="Select a City" name="City">
+                <mat-option *ngFor="let city of cityData" [value]="city.CityId">
+                  {{city.CityName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="employeeDetail.BloodGroup" placeholder="Select Blood Group" name="BloodGroup">
+                <mat-option *ngFor="let bloodGroup of bloodGroupData" [value]="bloodGroup.Name">
+                  {{bloodGroup.Name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3" style="padding-top:10px">
+            <mat-checkbox #bd (click)="showBankDetails()" (change)='employeeDetail.PF = bd.checked === true ? 1 : 0'
+              style="text-align: justify;font-size:12px;">
+              Select if you add Bank Details
+            </mat-checkbox>
+          </div>
+
+        </div>
+
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.ReferenceBy" matInput placeholder="ReferenceBy">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.ReferenceContact1" matInput placeholder="ReferenceContact1">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.ReferenceContact2" matInput placeholder="ReferenceContact2">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3" style="text-align: right;padding-top:10px;">
+            <mat-radio-group [(ngModel)]="employeeDetail.MaritalStatus" style="font-size: 12px;">
+              <mat-radio-button value='Married'>Married</mat-radio-button>&nbsp;
+              <mat-radio-button value='UnMarried'>UnMarried</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.AdhaarNo" matInput placeholder="AdhaarNo">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.AlternateContactNo" matInput placeholder="AlternateContactNo">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.PreviousCompany" matInput placeholder="PreviousCompany">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.JobType" matInput placeholder="JobType">
+            </mat-form-field>
+          </div>
+        </div>
+
+
+
+
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="employeeDetail.MotherName" matInput placeholder="MotherName">
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-3">
+            <mat-form-field>
+              <input matInput [(ngModel)]="employeeDetail.DOJ" [matDatepicker]="pickers" placeholder="DOJ">
+              <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+              <mat-datepicker #pickers></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <div class="button-row" style="text-align:left">
+              <label style="font-size:12px;margin-bottom:0px;cursor: pointer;">
+                Select a Photo</label>
+              <input type="file" (change)="uploadImage($event)" [(ngModel)]="employeeDetail.Photo" id="Photo"
+                name="Photo">
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-12" style="text-align:right">
+            <button mat-raised-button (click)="saveEmployee()" color="primary">Save</button>&nbsp;
+            <button mat-raised-button (click)="resetScreen()" color="accent">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf='viewFlag' class="list">
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-12" style="text-align:left">
+            <button (click)="onNewClick()" mat-raised-button color="warn">
+              <i class="material-icons" style="font-size:20px">add</i> New</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input (keyup)="searchId($event.target.value)" matInput placeholder="Search by Employee ID">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Search by Name">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Search by Email">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Search by Designation">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Search by Company">
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-sm-2">
+            <mat-form-field>
+              <mat-select placeholder="Select All">
+                <mat-option *ngFor="let company of company" [value]="company.value">
+                  {{company.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" style="margin-top:2%">
+          <div class="col-sm-12">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="EmployeeId">
+                  <th mat-header-cell *matHeaderCellDef> Employee ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.EmployeeId}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.FirstName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Contact">
+                  <th mat-header-cell *matHeaderCellDef> Contact </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ContactNo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Designation">
+                  <th mat-header-cell *matHeaderCellDef> Designation </th>
+                  <td mat-cell *matCellDef="let element"> {{element.DesignationName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Company">
+                  <th mat-header-cell *matHeaderCellDef> Company </th>
+                  <td mat-cell *matCellDef="let element"> {{element.CompanyName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ReportTo">
+                  <th mat-header-cell *matHeaderCellDef> Report To </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ReportToName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Active">
+                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                  <td mat-cell *matCellDef="let element">
+                    <mat-chip color="primary" *ngIf='element.Active'>Active</mat-chip>
+                    <mat-chip color="accent" *ngIf='!element.Active'>In Active</mat-chip>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element">
+                    <div class="row" style="text-align: center">
+                      <i color="primary" style="color:blue;cursor: pointer;" (click)="editEmployeeDetails(element)"
+                        class="material-icons">edit</i>&nbsp;
+                      <i color="warn" style="color:red;cursor: pointer;" (click)="removeEmployeeDetail(element)"
+                        class="material-icons">delete_forever</i>
+                    </div>
+                  </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="show" *ngIf='show'>
+        <br>
+        <div class="row">
+          <!-- <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="BankDetails.EmployeeBankId" matInput placeholder="EmployeeId">
+            </mat-form-field>
+          </div> -->
+
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="BankDetails.AccountNo" matInput placeholder="Account No">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="BankDetails.BankName" matInput placeholder="Bank Name">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="BankDetails.IFSC" matInput placeholder="IFSC Code">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="BankDetails.Branch" matInput placeholder="Branch Name">
+            </mat-form-field>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+
+          <div class="col-sm-3" style="text-align: right;padding-top:20px;">
+            <div>
+              <mat-slide-toggle [(ngModel)]="BankDetails.isPrimary" style="font-size: 12px;float: left;">Primary Account
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="BankDetails.MICR" matInput placeholder="MICRCode">
+            </mat-form-field>
+
+
+          </div>
+          <div class="col-sm-3">
+
+            <!-- <button mat-raised-button (click)="saveEmployee()" color="primary">Save</button>&nbsp; -->
+            <button mat-raised-button (click)="addBankDetails()" color="primary" style="float: right;">Add To
+              List</button>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Account No</th>
+                  <th scope="col">IFSC Code</th>
+                  <th scope="col">Bank Name</th>
+                  <th scope="col">Branch Name</th>
+                  <th scope="col">Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let bank of BankData;let i = index'>
+                  <td>{{bank.AccountNo}}</td>
+                  <td>{{bank.IFSC}}</td>
+                  <td>{{bank.BankName}}</td>
+                  <td>{{bank.Branch}}</td>
+                  <td>
+                    <div class="row" style="text-align: center">
+                      <i color="primary" style="color:blue" (click)="editBankDetails(bank,i)"
+                        class="material-icons">edit</i>&nbsp;
+                      <i color="warn" style="color:red" (click)="removeBankDetail(bank)"
+                        class="material-icons">delete_forever</i>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

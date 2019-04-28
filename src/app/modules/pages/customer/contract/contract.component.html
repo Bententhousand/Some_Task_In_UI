@@ -1,0 +1,151 @@
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+        <div class="card-header" id="maincard">
+          Contract Master
+        </div>
+        <div class="card-body">
+          <div *ngIf='!viewFlag' class="new">
+            <div class="row" *ngIf="isEditing">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <mat-slide-toggle [(ngModel)]="contractDetail.Active">Active</mat-slide-toggle>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+            <div class="row" style="margin-top:0.5%">
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <mat-select id="customer" [(ngModel)]="contractDetail.CustomerId" placeholder="Customer Name">
+                    <mat-option *ngFor="let customer of AllCustomerData" [value]="customer.Id">
+                      {{customer.Name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <input matInput id="sdate" [(ngModel)]="contractDetail.StartDate" [matDatepicker]="picker"
+                    (click)="picker.open()" readonly placeholder="Start Date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <input matInput id="edate" [(ngModel)]="contractDetail.EndDate" [matDatepicker]="picker1"
+                    (click)="picker1.open()" readonly placeholder="End Date">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+      
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-12" style="text-align:right">
+                <button mat-raised-button (click)="addContractDetails()" color="primary">Save</button>&nbsp;
+                <button mat-raised-button (click)="resetScreen()" color="accent">Cancel</button>
+              </div>
+            </div>
+          </div>
+      
+          <div *ngIf='viewFlag' class="list">
+            <div class="row" style="margin-top:0%">
+              <div class="col-sm-12" style="text-align:left">
+                <button (click)="onNewClick()" mat-raised-button color="warn">
+                  <i class="material-icons" style="font-size:20px">add</i> New</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchId($event.target.value)" matInput placeholder="Search By Id">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchName($event.target.value)" matInput placeholder="Search By Name">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <!-- <mat-form-field>
+                <input matInput id="edate" (dateChange)="searchDate($event.target.value)" [matDatepicker]="picker3" (click)="picker3.open()"
+                  readonly placeholder="Search By StartDate">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field> -->
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchDate($event.target.value)" matInput placeholder="Search By StartDate">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input (keyup)="searchAmount($event.target.value)" matInput placeholder="Search By Amount">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2"></div>
+            </div>
+            <div class="row" style="margin-top:1%">
+              <div class="col-sm-12">
+                <div class="mat-elevation-z8">
+                  <table mat-table [dataSource]="dataSource">
+      
+                    <ng-container matColumnDef="CustomerId">
+                      <th mat-header-cell *matHeaderCellDef> Customer ID </th>
+                      <td mat-cell *matCellDef="let element"> {{element.CustomerId}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="CustomerName">
+                      <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.CustomerName}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="StartDate">
+                      <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                      <td mat-cell *matCellDef="let element"> {{element.StartDate | date:'dd/MM/yyyy'}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="EndDate">
+                      <th mat-header-cell *matHeaderCellDef> End Date </th>
+                      <td mat-cell *matCellDef="let element"> {{element.EndDate | date:'dd/MM/yyyy'}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="TotalAmount">
+                      <th mat-header-cell *matHeaderCellDef> Total Amount </th>
+                      <td mat-cell *matCellDef="let element"> {{element.TotalAmount}} </td>
+                    </ng-container>
+      
+      
+                    <ng-container matColumnDef="Active">
+                      <th mat-header-cell *matHeaderCellDef> Status </th>
+                      <td mat-cell *matCellDef="let element">
+                        <!-- {{element.Active}} -->
+                        <mat-chip color="primary" *ngIf='element.Active'>Active</mat-chip>
+                        <mat-chip color="accent" *ngIf='!element.Active'>In Active</mat-chip>
+                      </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef> Action </th>
+                      <td mat-cell *matCellDef="let element">
+                        <div class="row" style="text-align: center">
+                          <i color="primary" style="color:blue;cursor: pointer;" (click)="editContractDetails(element)"
+                            class="material-icons">edit</i>&nbsp;
+                          <i color="warn" style="color:red;cursor: pointer;" (click)="removeContractDetail(element)"
+                            class="material-icons">delete_forever</i>
+                        </div>
+                      </td>
+                    </ng-container>
+      
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+      
+                  <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

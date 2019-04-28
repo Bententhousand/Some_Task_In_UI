@@ -1,0 +1,213 @@
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+      <div class="card-header" id="maincard">
+          Customer Site Mapping
+      </div>
+      <div class="card-body">
+          <div>
+            <div class="row">
+              <div class="col-sm-2">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="addBranch.CustomerId" (ngModelChange)="getAllBranch()" placeholder="Customer Name">
+                    <mat-option *ngFor="let customer of CustomerData" [value]="customer.Id">
+                      {{customer.ClientName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+          
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addBranch.Branch" placeholder="Branch">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addBranch.ContactPerson" placeholder="Contact Person">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input matInput onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" [(ngModel)]="addBranch.ContactNumber" placeholder="Contact No">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addBranch.Email" placeholder="Email">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2" style="text-align: right">
+                <button mat-raised-button (click)='AddBranch()' style="background-color:green;color:white">
+                  <i class="far fa-plus-square"></i> Add </button>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Customer Name</th>
+                      <th scope="col">City</th>
+                      <th scope="col">Branch</th>
+                      <th scope="col">Contact Person</th>
+                      <th scope="col">Contact No</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let branch of BranchData;let i = index'>
+                      <td>{{branch.CustomerName}}</td>
+                      <td>{{branch.CityName}}</td>
+                      <td>{{branch.Branch}}</td>
+                      <td>{{branch.ContactPerson}}</td>
+                      <td>{{branch.ContactNumber}}</td>
+                      <td>{{branch.Email}}</td>
+                      <td>
+                        <i class="material-icons" (click)='removeBranch(branch)' style="cursor:pointer;color:red">delete_forever</i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          
+          <br>
+          
+          <div>
+            <div class="row">
+              <div class="col-sm-2">
+                <mat-form-field>
+                  <mat-select  [(ngModel)]="addSite.BranchId" (ngModelChange)="getAllSite()" placeholder="Branch">
+                    <mat-option *ngFor="let branch of BranchData" [value]="branch.Id">
+                      {{branch.Branch}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addSite.Site" placeholder="Site">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field  class="example-full-width">
+                  <input matInput [(ngModel)]="addSite.ContactPerson" placeholder="Contact Person">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field  class="example-full-width">
+                  <input matInput [(ngModel)]="addSite.ContactNumber" placeholder="Contact No">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field  class="example-full-width">
+                  <input matInput [(ngModel)]="addSite.Email" placeholder="Email">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <mat-form-field  class="example-full-width">
+                  <input matInput [(ngModel)]="addSite.Address" placeholder="Address">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" style="text-align: right">
+                <button mat-raised-button (click)='AddSite()' style="background-color:green;color:white">
+                  <i class="far fa-plus-square"></i> Add </button>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Branch</th>
+                      <th scope="col">Site</th>
+                      <th scope="col">Contact Person</th>
+                      <th scope="col">Contact No</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let site of SiteData;let i = index'>
+                      <td>{{site.BranchName}}</td>
+                      <td>{{site.SiteName}}</td>
+                      <td>{{site.ContactNumber}}</td>
+                      <td>{{site.ContactNumber}}</td>
+                      <td>{{site.Email}}</td>
+                      <td>{{site.Address}}</td>
+                      <td> <i class="material-icons" (click)='removeSite(site)' style="cursor:pointer;color:red">delete_forever</i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <br>
+          <div>
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="addClassification.BranchId" placeholder="Branch">
+                    <mat-option *ngFor="let branch of BranchData" [value]="branch.Id">
+                      {{branch.Branch}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="addClassification.SiteId" (ngModelChange)="getAllClassification()" placeholder="Site">
+                    <mat-option *ngFor="let site of SiteData" [value]="site.SiteId">
+                      {{site.SiteName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="addClassification.Classfication" placeholder="Classification">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3" style="text-align: right">
+                <button mat-raised-button  (click)='AddClassification()' style="background-color:green;color:white">
+                  <i class="far fa-plus-square"></i> Add </button>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Branch</th>
+                      <th scope="col">Site</th>
+                      <th scope="col">Classification</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let cls of ClassData;let i = index'>
+                      <td>{{cls.BranchName}}</td>
+                      <td>{{cls.SiteName}}</td>
+                      <td>{{cls.Classification}}</td>
+                      <td> <i class="material-icons" (click)='removeClassification(cls)' style="cursor:pointer;color:red">delete_forever</i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+    </div>
+  </div>
+
+

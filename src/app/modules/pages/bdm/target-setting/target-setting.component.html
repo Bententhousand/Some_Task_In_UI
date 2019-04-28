@@ -1,0 +1,153 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+      <div class="card-header" id="maincard">
+        Target Setting
+      </div>
+   
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-2">
+
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field>
+                <mat-select [(ngModel)]="model.selectedMonth" placeholder="Select Month">
+                  <mat-option *ngFor="let month of month" [value]="month.value">
+                    {{month.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field>
+                <mat-select  [(ngModel)]="model.selectedYear" placeholder="Select Year">
+                  <mat-option *ngFor="let year of year" [value]="year.Value">
+                    {{year.Year}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+
+            </div>
+            <div class="col-sm-2">
+              <button mat-raised-button color="primary" [disabled]="!model.selectedYear || !model.selectedMonth">
+                <i class="material-icons" (click)="SelectMonth()" style="font-size:20px">arrow_right_alt</i>
+                Go</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Employee ID</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Target Amount</th>
+                    <th scope="col">
+                      <mat-checkbox [(ngModel)]="model.selectedAll" (click)="selectChec(model)"></mat-checkbox>
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let target of EmployeeTargetList;let i=index">
+                    <td>{{target.EmployeeId}}</td>
+                    <td>{{target.EmployeeName}}</td>
+                    <td>
+                      <input type="text" [(ngModel)]="target.TargetAmount" class="form-control form-control-sm"
+                        style="width:100px">
+                    </td>
+                    <td>
+                      <mat-checkbox [(ngModel)]="target.isSelected"></mat-checkbox>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12" style="text-align:right">
+              <button mat-raised-button [disabled]="!model.selectedYear || !model.selectedMonth"
+                (click)="TargetEmployee()" color="primary">Save</button>&nbsp;
+              <button mat-raised-button color="accent">Cancel</button>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search by Employee Id">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search by Name">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search Date">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search Target">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search Auctual">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search ReportTo">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Employee Id</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Month/Year</th>
+                    <th scope="col">Target</th>
+                    <th scope="col">Auctual</th>
+                    <th scope="col">ReportTo</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let target of TargetEmployeeList;let i=index">
+                    <td class="text-center">{{ target.EmployeeId }}</td>
+                    <td class="text-center">{{ target.EmployeeName}}</td>
+                    <td class="text-center">{{target.Month +'/'+ target.Year}}</td>
+                    <td class="text-center">{{ target.TargetAmount }}</td>
+                    <td class="text-center">{{ target.ActualAmount }}</td>
+                    <td class="text-center">{{ target.ReportTo }}</td>
+
+                    <td class="text-center">
+                      <div>
+                        <button type="button" (click)="removeTarget(row)" class="btn btn-sm btn-danger">
+                          <i class="material-icons">delete
+                          </i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+</div>

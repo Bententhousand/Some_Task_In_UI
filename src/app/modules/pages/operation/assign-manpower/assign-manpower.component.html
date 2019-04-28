@@ -1,0 +1,104 @@
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+      <div class="card-header" id="maincard">
+          Assign Manpower
+      </div>
+      <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="assignManpower.Customer" (ngModelChange)="getArea()" placeholder="Customer Name">
+                  <mat-option *ngFor="let customer of customerData" [value]="customer">
+                    {{customer.CustomerName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="assignManpower.BranchId" (ngModelChange)="getSite()" placeholder="Area">
+                  <mat-option *ngFor="let area of areaData" [value]="area.BranchId">
+                    {{area.BranchName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="assignManpower.SiteId" (ngModelChange)="getClassification()" placeholder="Site">
+                  <mat-option *ngFor="let site of siteData" [value]="site.SiteId">
+                    {{site.SiteName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="assignManpower.ClassificationId" (ngModelChange)="getService()" placeholder="Classification">
+                  <mat-option *ngFor="let classification of classificationData" [value]="classification.ClassificationId">
+                    {{classification.ClassificationName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row" style="margin-top:2%">
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="assignManpower.ServiceId" (ngModelChange)="getManpower()" placeholder="Service">
+                  <mat-option *ngFor="let service of serviceData" [value]="service.ServiceId">
+                    {{service.Service}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select placeholder="Select a Manpower" [(ngModel)]="selectedManpower" multiple>
+                  <mat-option *ngFor="let manpower of manpowerData" [value]="manpower">{{manpower.ManPowerName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6" style="text-align:right">
+              <button mat-raised-button (click)="addAssignManpower()" color="primary">Save</button>&nbsp;
+              <button mat-raised-button (click)="onClear()" color="accent">Clear</button>
+            </div>
+          </div>
+          
+          <hr>
+          <br>
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Area</th>
+                    <th scope="col">Site</th>
+                    <th scope="col">Classification</th>
+                    <th scope="col">Service</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Action</th>
+          
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let manpower of assignManpowerData"> 
+                    <td>{{manpower.BranchName}}</td>
+                    <td>{{manpower.SiteName}}</td>
+                    <td>{{manpower.ClassificationName}}</td>
+                    <td>{{manpower.DesignationName}}</td>
+                    <td>{{manpower.ManPowerName}}</td>
+                    <td>
+                      <i color="warn" style="color:red;cursor: pointer;" (click)="removeAssignManpower(manpower)" class="material-icons">delete_forever</i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+                        </div>
+    </div>
+  </div>
+  
+

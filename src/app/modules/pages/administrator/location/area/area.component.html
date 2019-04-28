@@ -1,0 +1,291 @@
+<div *ngIf='!viewFlag' class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+      <div class="card-header" id="maincard">
+       Area
+      </div>
+<div class="container-fluid" id="fixedpage">
+    <div  class="new">
+  <div class="row"  style="margin-top:3%">
+    <div class="col-sm-2" style="text-align: right;padding-right:20px">
+      <div>
+        <button mat-raised-button (click)="onNewClick()" color="warn"  style="margin-left: 656%">
+          <mat-icon>list</mat-icon>View
+        </button>
+      </div>
+    </div>
+  </div>
+ 
+    <div class="card-body">
+
+          <form [formGroup]="signUpForm" class="form">
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="CountryName" [(ngModel)]="AreaModel.CountryId" (ngModelChange)="GetStateName(AreaModel.CountryId)" required placeholder="Country Name">
+                    <mat-option *ngFor="let i of CountryIdName" [value]="i.CountryId">{{i.CountryName}}</mat-option>
+                 
+                  </mat-select>
+                  <mat-error> CountryName required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="StateName" [(ngModel)]="AreaModel.StateId"  (ngModelChange)="GetCityName(AreaModel.StateId)" required placeholder="State Name">
+                    <mat-option *ngFor="let i of StateIdName" [value]="i.StateId">{{i.StateName}}</mat-option>
+                   
+                  </mat-select> <mat-error> StateName required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="CityName" [(ngModel)]="AreaModel.CityId" required placeholder="City Name">
+                    <mat-option *ngFor="let i of CityIdName" [value]="i.CityId">{{i.CityName}}</mat-option>
+                  
+                  </mat-select> <mat-error> CityName required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="AreaName" [(ngModel)]="AreaModel.AreaName" 
+                  required placeholder="Area Name" >
+                  <mat-error> AreaName required</mat-error>  </mat-form-field>
+              </div>
+              <!-- <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="AreaCode" required placeholder="Area Code" type="number" value="">
+                <mat-error> AreaCode required</mat-error>  </mat-form-field>
+            </div> -->
+            <br>
+              <div class="col-sm-3" style="padding-top:10px;">
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="Pincode" [(ngModel)]="AreaModel.Pincode" required
+                   placeholder="Pincode" type="number">
+                  <mat-error> Pincode required</mat-error> </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" style="text-align: right">
+                <div class="btn">
+                  <button *ngIf="!isEditing" mat-raised-button color="primary" (click)="saveAreaDetails()">Save</button>&nbsp;
+               <button *ngIf="isEditing" mat-raised-button color="primary" (click)="saveAreaDetails()">Update</button>&nbsp;
+                <button (click)="onNewClick()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+      
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div *ngIf='viewFlag' class="List">
+  <!--/ View table page -->
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+        <div class="card-header" id="maincard">
+         Area
+        </div>
+  <div class="container-fluid" id="fixedpage">
+  
+    <div class="row" style="margin-top:3%">
+      <div class="col-sm-8" style="padding-left:30px">
+        <div class="input-group ht-41">
+          <div class="input-group-prepend">
+            <span class="input-group-text input-group-empty">
+              <i class="fa fa-search"></i>
+            </span>
+          </div>
+          <input type="text" class="form-control text-box-empty" placeholder="Global Filter (Type AreaName, PinCode, CityName..)" (keyup)="applyFilter($event.target.value)">
+        </div>
+      </div>
+      <div class="col-sm-4" style="text-align:right;padding-right:30px">
+        <button mat-raised-button (click)="onNewClick()" color="warn">
+          <mat-icon>add</mat-icon>New
+        </button>
+      </div>
+    </div>
+  
+    <br>
+  
+  
+  
+  
+      <!--/ table start-->
+      <div class="col-lg-12 col-md-12">
+        <!--/ table start-->
+        <div class="table-container mat-elevation-z2">
+          <mat-table class="color-table" #table [dataSource]="dataSource" matSort>
+  
+            <ng-container matColumnDef="SNo">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                SNo
+                <button mat-icon-button [matMenuTriggerFor]="SNoFilter" class="Filter-icon-WT">
+                  <mat-icon aria-label="SNo Filter">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #SNoFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                  <div class="info-wrapper menuPop">
+                    <mat-form-field class="w-100 input-label">
+                      <input matInput placeholder="Search SNo" (click)="handleClick($event)" (keyup)="applyFilter($event.target.value)"
+                        autofocus>
+                    </mat-form-field>
+                    <div class="ta-w">
+                      <button mat-mini-fab color="warn" class="satPop-ok">
+                        <mat-icon aria-label="Close">close</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </mat-menu>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element;let i=index"> {{i+1}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="AreaName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                AreaName
+                <button mat-icon-button [matMenuTriggerFor]="EmpFilter" class="Filter-icon-WT">
+                  <mat-icon aria-label="Area Filter">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #EmpFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                  <div class="info-wrapper menuPop">
+                    <mat-form-field class="w-100 input-label">
+                      <input matInput placeholder="Search AreaName." (click)="handleClick($event)" (keyup)="applyFilter($event.target.value)"
+                        autofocus>
+                    </mat-form-field>
+                    <div class="ta-w">
+                      <button mat-mini-fab color="warn" class="satPop-ok">
+                        <mat-icon aria-label="Close">close</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </mat-menu>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let ListArea"> {{ListArea.AreaName}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="Pincode">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                Pincode
+                <button mat-icon-button [matMenuTriggerFor]="PincodeFilter" class="Filter-icon-WT">
+                  <mat-icon aria-label="Phone Filter">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #PincodeFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                  <div class="info-wrapper menuPop">
+                    <mat-form-field class="w-100 input-label">
+                      <input matInput placeholder="Search Pincode." (click)="handleClick($event)" (keyup)="applyFilter($event.target.value)"
+                        autofocus>
+                    </mat-form-field>
+                    <div class="ta-w">
+                      <button mat-mini-fab color="warn" class="satPop-ok">
+                        <mat-icon aria-label="Close">close</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </mat-menu>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let ListArea"> {{ListArea.Pincode}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="CityName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                CityName
+                <button mat-icon-button [matMenuTriggerFor]="CityNameFilter" class="Filter-icon-WT">
+                  <mat-icon aria-label="Phone Filter">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #CityNameFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                  <div class="info-wrapper menuPop">
+                    <mat-form-field class="w-100 input-label">
+                      <input matInput placeholder="Search CityName." (click)="handleClick($event)" (keyup)="applyFilter($event.target.value)"
+                        autofocus>
+                    </mat-form-field>
+                    <div class="ta-w">
+                      <button mat-mini-fab color="warn" class="satPop-ok">
+                        <mat-icon aria-label="Close">close</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </mat-menu>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let ListArea"> {{ListArea.City.CityName}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="StateName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                StateName
+                <button mat-icon-button [matMenuTriggerFor]="StateNameFilter" class="Filter-icon-WT">
+                  <mat-icon aria-label="Phone Filter">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu StateNameFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                  <div class="info-wrapper menuPop">
+                    <mat-form-field class="w-100 input-label">
+                      <input matInput placeholder="Search StateName." (click)="handleClick($event)" (keyup)="applyFilter($event.target.value)"
+                        autofocus>
+                    </mat-form-field>
+                    <div class="ta-w">
+                      <button mat-mini-fab color="warn" class="satPop-ok">
+                        <mat-icon aria-label="Close">close</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </mat-menu>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let ListArea"> {{ListArea.State.StateName}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="CountryName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="inFilter color-white">
+                CountryName
+                <button mat-icon-button [matMenuTriggerFor]="CountryNameFilter" class="Filter-icon-WT">
+                  <mat-icon aria-label="Phone Filter">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #CountryNameFilter="matMenu" yPosition="below" [overlapTrigger]="false" xPosition="before">
+                  <div class="info-wrapper menuPop">
+                    <mat-form-field class="w-100 input-label">
+                      <input matInput placeholder="Search CountryName" (click)="handleClick($event)" (keyup)="applyFilter($event.target.value)"
+                        autofocus>
+                    </mat-form-field>
+                    <div class="ta-w">
+                      <button mat-mini-fab color="warn" class="satPop-ok">
+                        <mat-icon aria-label="Close">close</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </mat-menu>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let ListArea"> {{ListArea.Country.CountryName}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef class="color-white">Action</mat-header-cell>
+              <mat-cell *matCellDef="let ListArea">
+                <button mat-icon-button color="primary" (click)="editCity(true,ListArea)" matTooltip="Edit This Row"
+                  [matTooltipClass]="'custom-tip'">
+                  <mat-icon aria-label="Edit Row" class="f-18">
+                    edit
+                  </mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="RemoveArea(ListArea)" matTooltip="Delete This Row"
+                  [matTooltipClass]="'custom-tip'">
+                  <mat-icon aria-label="Add" class="f-18">delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+  
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row;let i =index; columns: displayedColumns;" (click)="selection.toggle(row)">
+            </mat-row>
+          </mat-table>
+  
+          <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+          </mat-paginator>
+        </div>
+        <!--/ table start-->
+      </div>
+    <!--/ table end-->
+  
+  </div>
+    </div>
+    </div>
+  </div>

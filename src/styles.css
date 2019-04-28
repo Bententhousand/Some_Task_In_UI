@@ -1,0 +1,154 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 44px;
+}
+
+mat-toolbar {
+    height: 44px;
+}
+
+#maincard {
+    background-color: #344955;
+    color: white;
+    text-align: left;
+    border-radius: 0px
+}
+
+button:focus {
+    outline: 1px dotted !important;
+    outline: 0px auto -webkit-focus-ring-color !important;
+}
+
+.docs-primary-header {
+    padding-left: 20px;
+}
+
+.component-page-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.custom-dialog-container .mat-dialog-container {
+    box-shadow: none;
+    background: none;
+    padding: 0px;
+  }
+
+input:focus {
+    outline: none;
+}
+
+/* 
+#menuhover:focus {
+    outline: none;
+} */
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    width: 100%;
+    font-size: 12px;
+}
+
+.mat-chip {
+    font-size: 12px;
+}
+
+tr, td {
+    font-size: 12px;
+}
+
+.mat-cell {
+    font-size: 12px;
+}
+
+.card {
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1), 0 10px 30px 0 rgba(0, 0, 0, 0.2);
+}
+
+#addbtn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+#sbtn {
+    background: linear-gradient(60deg, #ab47bc, #8e24aa);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(156, 39, 176, .4);
+    color: white
+}
+
+#dbtn {
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(255, 152, 0, .4);
+}
+
+#menuhover:focus {
+    outline: none;
+}
+
+#fixedpage {
+    margin-bottom: 3%;
+}
+
+#menuhover:hover {
+    color: white;
+    background-color: #1976d2;
+    background: linear-gradient(115deg, #0d47a1, #42a5f5);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(17, 80, 151, 0.4);
+}
+
+/* #Headerhover:hover{
+border-left: 4px solid #1976d2;
+border-radius:0px;
+} */
+
+@media(max-width:500px) {
+    .mat-toolbar.mat-primary {
+        background: #1e88e5;
+    }
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(30, 136, 229, 0.2);
+}
+
+@media(max-width:500px) {
+    #top {
+        margin-top: 10px
+    }
+}
+
+
+.card-body {
+    overflow: auto;
+}
+
+.mat-elevation-z8 {
+    overflow: auto
+}
+
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    background-color: #000;
+}

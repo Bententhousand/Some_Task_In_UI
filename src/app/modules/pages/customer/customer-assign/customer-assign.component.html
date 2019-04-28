@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="card" style="border:0;border-radius:0">
+    <div class="card-header" id="maincard">
+        Customer Assign
+    </div>
+    <div class="card-body">
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="card" style="overflow-x:scroll">
+    <div class="card-header">
+      <h5>Customer Assign</h5>
+    </div>
+    <div class="card-body">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field>
+                <mat-select placeholder="Client Name">
+                  <mat-option *ngFor="let month of month" [value]="month.value">
+                    {{month.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field><br>
+              <mat-form-field>
+                <mat-select placeholder="Service Name">
+                  <mat-option *ngFor="let year of year" [value]="year.value">
+                    {{year.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field><br>
+              <mat-form-field>
+                <mat-select placeholder="Employee Name">
+                  <mat-option *ngFor="let year of year" [value]="year.value">
+                    {{year.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="row" style="margin-top:1%">
+                <div class="col-sm-12" style="text-align:right">
+                  <button mat-raised-button color="primary">Add</button>&nbsp;
+                  <button mat-raised-button (click)="onListClick()" color="accent">Clear</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="row">
+                <div class="col-sm-12">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Manpower</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

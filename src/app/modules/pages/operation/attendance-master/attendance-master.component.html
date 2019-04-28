@@ -1,0 +1,126 @@
+<div class="container-fluid">
+    <div class="card" style="border:0;border-radius:0">
+      <div class="card-header" id="maincard">
+          Attendance Master
+      </div>
+      <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="attendance.CustomerId" (ngModelChange)="getArea()" placeholder="Customer Name">
+                  <mat-option *ngFor="let customer of customerData" [value]="customer.CustomerId">
+                    {{customer.CustomerName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+        
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="attendance.BranchId" (ngModelChange)="getSite()" placeholder="Branch">
+                  <mat-option *ngFor="let area of areaData" [value]="area.BranchId">
+                    {{area.BranchName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field>
+                <mat-select [(ngModel)]="attendance.SiteId" placeholder="Site">
+                  <mat-option *ngFor="let site of siteData" [value]="site.SiteId">
+                    {{site.SiteName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3" style="text-align: right">
+              <button mat-raised-button (click)="getAllManpower()" color="primary">
+                <i class="material-icons" style="font-size:20px">arrow_right_alt</i> Submit</button>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-5">
+        
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field>
+                <input matInput [(ngModel)]="attendance.Date" [matDatepicker]="picker" placeholder="Choose date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-5">
+        
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput (keyup)="searchManpower($event.target.value)" placeholder="Search By Id">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input matInput (keyup)="searchManpower($event.target.value)" placeholder="Search By Name">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">ManPower ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Attendance</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">OverTime</th>
+                    <th scope="col">
+                      <mat-checkbox [(ngModel)]="selectedAllCheck" (click)="select()">
+                      </mat-checkbox>
+                    </th>
+        
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let manpower of manpowerData;let i=index">
+                    <td>{{manpower.ManpowerId}}</td>
+                    <td>{{manpower.ManpowerName}}</td>
+                    <td disabled="manpower.selectedStatus.StatusId != null">
+                      <mat-form-field style="width:100px">
+                        <mat-select [(ngModel)]="manpower.selectedStatus" placeholder="Select">
+                          <mat-option *ngFor="let status of StatusList" [value]="status">
+                            {{status.StatusName}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                    <td disabled="manpower.Reason != null">
+                      <input type="text" [(ngModel)]="manpower.Reason" [disabled]="manpower.selectedStatus.StatusId == 1" class="form-control form-control-sm"
+                        style="width:100px">
+                    </td>
+                    <td disabled="row.OverTime != null">
+                      <input type="text" [(ngModel)]="manpower.OverTime" (keypress)='onEnterNumberOnly($event,i)' class="form-control form-control-sm" style="width:100px">
+                    </td>
+                    <td>
+                      <mat-checkbox [checked]="isChecked(manpower.isSelected)" [(ngModel)]="manpower.isSelected"></mat-checkbox>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-12" style="text-align:right">
+              <button mat-raised-button (click)="addManpowerAttendance()" color="primary">Save</button>&nbsp;
+              <button mat-raised-button (click)="cancelManpowerAttendance()" color="accent">Cancel</button>
+            </div>
+          </div>
+                      </div>
+    </div>
+  </div>
+  
+
