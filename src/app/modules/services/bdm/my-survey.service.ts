@@ -25,104 +25,122 @@ export class MySurveyService {
       .pipe(catchError(this.errorHandler));
   }
 
-  getSurveyDetailsToEdit(element) {
-    let getDetailsToEditParams = {
-      ActionBy: this._headerStorage.getUserId(),
-      ClientId: element.Id
-    };
-
-    return this._http
-      .post(
-        apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
-        getDetailsToEditParams
-      )
-      .pipe(catchError(this.errorHandler));
-  }
-
   getAppointmentDetailsByQuotationId(element) {
-    let getParams = {
-      ActionBy: this._headerStorage.getUserId(),
-      ClientId: element.Id
-    };
     return this._http
-      .post(
-        apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentQuotationById",
-        getParams
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentQuotationById",
+        // apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentQuotationById",
+        element
       )
       .pipe(catchError(this.errorHandler));
   }
 
-  getActiveServiceMaster() {
-    let params = {
-      ActionBy: this._headerStorage.getUserId(),
-      ClientId: this._headerStorage.getUserId()
-    };
-
+  getActiveServiceMaster(element) {
     return this._http
-      .post(apiUrl + "ServiceMaster/GetActiveServiceMaster", params)
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/ServiceMaster/GetActiveServiceMaster",
+        // apiUrl + "ServiceMaster/GetActiveServiceMaster",
+        element
+      )
       .pipe(catchError(this.errorHandler));
   }
 
-  getAllStatus() {
-    let params = {
-      ActionBy: this._headerStorage.getUserId(),
-      ClientId: this._headerStorage.getUserId()
-    };
-
+  getAllStatus(element) {
     return this._http
-      .post(apiUrl + "StatusMaster/GetAllStatus", params)
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/StatusMaster/GetAllStatus",
+        // apiUrl + "StatusMaster/GetAllStatus",
+        element
+      )
       .pipe(catchError(this.errorHandler));
   }
 
-  getAllStates() {
-    let params = {
-      ActionBy: this._headerStorage.getUserId()
-    };
-
+  getAllStates(element) {
     return this._http
-      .post(apiUrl + "StateMaster/GetAllStates", params)
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/StateMaster/GetAllStates",
+        // apiUrl + "StateMaster/GetAllStates",
+        element
+      )
       .pipe(catchError(this.errorHandler));
   }
 
-  getAllCities() {
-    let params = {
-      ActionBy: this._headerStorage.getUserId()
-    };
-
+  getAllCities(element) {
     return this._http
-      .post(apiUrl + "CityMaster/GetAllCities", params)
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/CityMaster/GetAllCities",
+        // apiUrl + "CityMaster/GetAllCities",
+        element
+      )
       .pipe(catchError(this.errorHandler));
   }
 
   getAllReportByClientId(element) {
-    let getParams = {
-      ActionBy: this._headerStorage.getUserId(),
-      ClientId: element.Id
-    };
     return this._http
-      .post(apiUrl + "BDMAppointmentReport/GetAllReportByClientId", getParams)
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/BDMAppointmentReport/GetAllReportByClientId",
+        // apiUrl + "BDMAppointmentReport/GetAllReportByClientId",
+        element
+      )
       .pipe(catchError(this.errorHandler));
   }
 
-  getActiveStatus() {
-    let params = {
-      ActionBy: this._headerStorage.getUserId(),
-      position: this._headerStorage.getPosition()
-    };
+  getActiveStatus(element) {
     return this._http
-      .post(apiUrl + "StatusMaster/GetActiveStatus", params)
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/StatusMaster/GetActiveStatus",
+        // apiUrl + "StatusMaster/GetActiveStatus",
+        element
+      )
       .pipe(catchError(this.errorHandler));
   }
 
   getAppointmentDetailsByClientId(element) {
-    let getParams = {
-      ActionBy: this._headerStorage.getUserId(),
-      ClientId: element.Id
-    };
     return this._http
-      .post(
-        apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
-        getParams
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
+        // apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
+        element
+      )
+      .pipe(catchError(this.errorHandler));
+  }
+
+  addAppoinmentReport(element) {
+    return this._http
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/BDMAppointmentReport/CreateBDMAppointmentReport",
+        // apiUrl + "BDMAppointmentReport/CreateBDMAppointmentReport",
+        element
+      )
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getDesignationListByServiceId(element) {
+    return this._http
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/Designation/GetDesignationByStatusId",
+        // apiUrl + "Designation/GetDesignationByStatusId",
+        element
+      )
+      .pipe(catchError(this.errorHandler));
+  }
+
+  addBDMAppointmentDetails(element) {
+    return this._http
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/CreateBDMAppointmentDetail",
+        // apiUrl + "Designation/GetDesignationByStatusId",
+        element
+      )
+      .pipe(catchError(this.errorHandler));
+  }
+
+  updateBDMAppointmentDetails(element) {
+    return this._http
+      .post<any>(
+        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/UpdateBDMAppointmentDetail",
+        // apiUrl + "Designation/GetDesignationByStatusId",
+        element
       )
       .pipe(catchError(this.errorHandler));
   }

@@ -1,10 +1,12 @@
 import { CityService } from "./../../../services/administrator/location/city.service";
 import { StateService } from "./../../../services/administrator/location/state.serivce";
-import { DatePipe } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { DatePipe, formatDate } from "@angular/common";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { MySurveyService } from "../../../services/bdm/my-survey.service";
 import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 import { HeaderStorageService } from "../../../../shared/header-storage.service";
+import { DesignationService } from "../../../services/master/designation.service";
+import { MatCheckbox } from "@angular/material";
 
 @Component({
   selector: "app-my-survey",
@@ -17,12 +19,19 @@ export class MySurveyComponent implements OnInit {
   isEditing: boolean = false;
   checkEditing: boolean = false;
   AppoinmentDetail: any = {};
-  requirement: any = {};
-  existingRequirement: any = {};
   ServiceMasterList: any[] = [];
   DesignationMasterList: any[] = [];
   StateMasterList: any[] = [];
   CityMasterList: any[] = [];
+  StatusList: any[] = [];
+  allReportsList: any[] = [];
+  selectedRowToEdit: any = {};
+  requirementDetailsList: any[] = [];
+  existingCompetitorsList: any[] = [];
+  requirement: any = {};
+  existCompetitor: any = {};
+  ManPower = 0;
+  ContractValue = 0;
 
   objSearchParams = {
     searchEmployee: "",
@@ -34,11 +43,11 @@ export class MySurveyComponent implements OnInit {
 
   surveyGridDetails: any[] = [];
 
+  @ViewChild("existingCustomer") existingCompetitors: MatCheckbox;
+
   constructor(
     private _date: DatePipe,
     private _mySurvey: MySurveyService,
-    private _state: StateService,
-    private _city: CityService,
     private _headerStorage: HeaderStorageService
   ) {}
 
@@ -70,41 +79,279 @@ export class MySurveyComponent implements OnInit {
     );
   }
 
-  getStates() {
-    this._state.listStateDetails().subscribe(
-      res => {
-        // this.StateMasterList = <any[]>res;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  getCity() {
-    this._city.listCityDetails().subscribe(
-      res => {
-        this.CityMasterList = <any[]>res;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
   onEditRow(row) {
-    this._mySurvey.getSurveyDetailsToEdit(row).subscribe(
+    this.selectedRowToEdit = row;
+    this.isFormOpen = !this.isFormOpen;
+    this.isEditing = true;
+    this.getBDMAppointmentDetailByClientId(row);
+    this.getAppointmentQuotationById(row);
+    this.getActiveServiceMaster();
+    this.GetAllStatus();
+    this.getAllStates();
+    this.getAllCities();
+    this.getAllReportByClientId(row);
+    this.getActiveStatus();
+  }
+
+  getAppointmentQuotationById(row) {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001",
+      ClientId: row.Id
+    };
+    this._mySurvey.getAppointmentDetailsByQuotationId(element).subscribe(
       res => {
-        this.AppoinmentDetail = res;
+        console.log(res, "getAppointmentQuotationById");
       },
       err => {
         console.log(err);
       }
     );
+  }
+
+  getActiveServiceMaster() {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001",
+      Id: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001"
+    };
+    this._mySurvey.getActiveServiceMaster(element).subscribe(
+      res => {
+        console.log(res, "getActiveServiceMaster");
+        this.ServiceMasterList = res.result;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  GetAllStatus() {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001",
+      Id: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001"
+    };
+    this._mySurvey.getAllStatus(element).subscribe(
+      res => {
+        console.log(res, "GetAllStatus");
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getAllStates() {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001"
+    };
+
+    this._mySurvey.getAllStates(element).subscribe(
+      res => {
+        console.log(res, "getAllStates");
+        this.StateMasterList = res.result;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getAllCities() {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001"
+    };
+
+    this._mySurvey.getAllCities(element).subscribe(
+      res => {
+        console.log(res, "getAllCities");
+        this.CityMasterList = res.result;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getAllReportByClientId(row) {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001",
+      ClientId: row.Id
+    };
+    this._mySurvey.getAllReportByClientId(element).subscribe(
+      res => {
+        console.log(res, "getAllReportByClientId");
+        this.allReportsList = res.result;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getActiveStatus() {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001",
+      position: this._headerStorage.getPosition()
+        ? this._headerStorage.getPosition()
+        : "3"
+    };
+
+    this._mySurvey.getActiveStatus(element).subscribe(
+      res => {
+        console.log(res, "getActiveStatus");
+        this.StateMasterList = res.result;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getBDMAppointmentDetailByClientId(row) {
+    let element = {
+      ActionBy: this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001",
+      ClientId: row.Id
+    };
+
+    this._mySurvey.getAppointmentDetailsByClientId(element).subscribe(
+      res => {
+        console.log(res, "getBDMAppointmentDetailByClientId");
+        this.AppoinmentDetail = res.result;
+        this.requirementDetailsList = this.AppoinmentDetail.BDMSurveyRequirement;
+        this.existingCompetitorsList = this.AppoinmentDetail.surveyCompetitorsDetail;
+        this.existingCompetitors.checked =
+          this.existingCompetitorsList.length > 0 ? true : false;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  saveAppointMentReport() {
+    let element = {
+      Calltype: this.AppoinmentDetail.selectedCallHistoryStatus,
+      Date: this.AppoinmentDetail.callHistoryDate,
+      Remarks: this.AppoinmentDetail.callHistoryRemarks
+    };
+    this._mySurvey.addAppoinmentReport(element).subscribe(
+      res => {
+        console.log(res);
+        this.getAllReportByClientId(this.selectedRowToEdit);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  onSelectedServiceChange() {
+    let element = {
+      Id: this.requirement.SelectedService
+    };
+    this._mySurvey.getDesignationListByServiceId(element).subscribe(
+      res => {
+        console.log(res);
+        this.DesignationMasterList = res.result;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  onAddRequirmentDetails() {
+    let element = {
+      Service: this.requirement.SelectedService,
+      ServiceName: this.ServiceMasterList[
+        this.ServiceMasterList.findIndex(
+          e => e.Id === this.requirement.SelectedService
+        )
+      ].Name,
+      Designation: this.requirement.SelectedDesignation,
+      DesignationName: this.DesignationMasterList[
+        this.DesignationMasterList.findIndex(
+          d => d.Id === this.requirement.SelectedDesignation
+        )
+      ].Name,
+      RatePerEmployee: this.requirement.RatePerEmployee,
+      EmployeeCount: this.requirement.EmployeeCount,
+      Total: +this.requirement.RatePerEmployee * +this.requirement.EmployeeCount
+    };
+    this.requirementDetailsList.push(element);
+    this.requirement = {};
+  }
+
+  onRemoveRequirementDetail(index: number) {
+    this.requirementDetailsList.splice(index, 1);
+  }
+
+  onAddCompetitor() {
+    this.existCompetitor.Total =
+      +this.existCompetitor.RatePerEmployee +
+      +this.existCompetitor.EmployeeCount;
+    this.ManPower += +this.existCompetitor.EmployeeCount;
+    this.ContractValue += +this.existCompetitor.Total;
+    let element = Object.assign({}, this.existCompetitor);
+    this.existingCompetitorsList.push(element);
+  }
+
+  onRemoveCompetitor(index: number) {
+    this.ManPower -= this.existingCompetitorsList[index].EmployeeCount;
+    this.ContractValue -= this.existingCompetitorsList[index].Total;
+    this.existingCompetitorsList.splice(index, 1);
+  }
+
+  saveAppointmentDetail() {
+    this.AppoinmentDetail.EmployeeId = this._headerStorage.getUserId()
+      ? this._headerStorage.getUserId()
+      : "1001";
+    this.AppoinmentDetail.RequirementDetail = this.requirementDetailsList;
+    this.AppoinmentDetail.Competitor = this.existingCompetitorsList;
+    this.AppoinmentDetail.ExistCompetitors = this.existingCompetitors.checked;
+    this.AppoinmentDetail.State = this.AppoinmentDetail.StateId;
+    this.AppoinmentDetail.City = this.AppoinmentDetail.CityId;
+    this.AppoinmentDetail.ExpectedConfirmationDate = formatDate(
+      new Date(),
+      "yyyy-MM-dd",
+      "en-IN"
+    );
+    if (!this.isEditing) {
+      this.AppoinmentDetail.CreatedBy = this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001";
+      this._mySurvey.addBDMAppointmentDetails(this.AppoinmentDetail).subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    } else {
+    }
   }
 
   addBdmAppointment() {
-    this.isFormOpen = true;
     this.isEditing = false;
   }
 
