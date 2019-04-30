@@ -111,35 +111,40 @@
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input [(ngModel)]="AppoinmentDetail.ClientName" matInput placeholder="Client Name">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.ClientName" matInput placeholder="Client Name">
                 </mat-form-field>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input [(ngModel)]="AppoinmentDetail.ClientAddress" matInput placeholder="Client Address">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.ClientAddress" matInput placeholder="Client Address">
                 </mat-form-field>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input [(ngModel)]="AppoinmentDetail.ClientContactNo" matInput placeholder="Client Contact No">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.ClientContactNo" matInput placeholder="Client Contact No">
                 </mat-form-field>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input [(ngModel)]="AppoinmentDetail.ContactPerson" matInput placeholder="Contact Person">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.ContactPerson" matInput placeholder="Contact Person">
                 </mat-form-field>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input matInput [(ngModel)]="AppoinmentDetail.Designation" placeholder="Designation">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4" matInput
+                    [(ngModel)]="AppoinmentDetail.Designation" placeholder="Designation">
                 </mat-form-field>
               </div>
             </div>
@@ -148,28 +153,32 @@
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input [(ngModel)]="AppoinmentDetail.Mobile" matInput placeholder="Mobile">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.Mobile" matInput placeholder="Mobile">
                 </mat-form-field>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input [(ngModel)]="AppoinmentDetail.Email" matInput placeholder="Email">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.Email" matInput placeholder="Email">
                 </mat-form-field>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field class="example-full-width">
-                  <input [(ngModel)]="AppoinmentDetail.ReferBy" matInput placeholder="ReferBy">
+                  <input [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.ReferBy" matInput placeholder="ReferBy">
                 </mat-form-field>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field>
-                  <mat-select [(ngModel)]="AppoinmentDetail.StateId" placeholder="Select State">
+                  <mat-select [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.StateId" placeholder="Select State">
                     <mat-option value="undefined">
                       Select A State
                     </mat-option>
@@ -183,7 +192,8 @@
             <div class="form-group">
               <div class="col-sm-9">
                 <mat-form-field>
-                  <mat-select [(ngModel)]="AppoinmentDetail.CityId" placeholder="Select City">
+                  <mat-select [disabled]="+AppoinmentDetail.StatusId === 6 || +Position === 4"
+                    [(ngModel)]="AppoinmentDetail.CityId" placeholder="Select City">
                     <mat-option value="undefined">
                       Select A City
                     </mat-option>
@@ -213,16 +223,16 @@
           </div>
           <div class="modal-body" id="modal-body">
             <form name="myForm" role="form" class="form-horizontal well well-sm">
-              <fieldset>
+              <fieldset [disabled]="+AppoinmentDetail.StatusId === 6">
                 <div class="row">
                   <div class="col-lg-6 col-md-6">
                     <div class="form-group">
                       <label for="CallType" class="control-label col-sm-3">Call Type</label>
                       <div class="col-sm-9">
                         <mat-form-field>
-                          <mat-select placeholder="Select A Status"
+                          <mat-select placeholder="Select A Status" [ngModelOptions]="{standalone: true}"
                             [(ngModel)]="AppoinmentDetail.selectedCallHistoryStatus">
-                            <mat-option *ngFor="let stus of StateMasterList" [value]="stus.Id">
+                            <mat-option *ngFor="let stus of StatusList" [value]="stus.Id">
                               {{stus.Name}}
                             </mat-option>
                           </mat-select>
@@ -232,8 +242,8 @@
                     <div class="form-group">
                       <label for="date" class="control-label col-sm-3">Date</label>
                       <div class="col-sm-9">
-                        <input [(ngModel)]="AppoinmentDetail.callHistoryDate" matInput [matDatepicker]="picker2"
-                          placeholder="To date">
+                        <input [ngModelOptions]="{standalone: true}" [(ngModel)]="AppoinmentDetail.callHistoryDate"
+                          matInput [matDatepicker]="picker2" placeholder="To date">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                       </div>
@@ -242,15 +252,23 @@
                       <label for="remark" class="control-label col-sm-3">Remarks</label>
                       <div class="col-sm-9">
                         <mat-form-field class="example-full-width">
-                          <input [(ngModel)]="AppoinmentDetail.callHistoryRemarks" matInput placeholder="Remarks">
+                          <input matInput [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="AppoinmentDetail.callHistoryRemarks" placeholder="Remarks">
                         </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="remark" class="control-label col-sm-3">Upload</label>
+                      <div class="col-sm-9">
+                        <input #fileBrowser (change)="onFileSelected($event)" type="file" multiple>
                       </div>
                     </div>
                   </div>
                 </div>
               </fieldset>
               <div class="modal-footer">
-                <button mat-raised-button color="primary" (click)="saveAppointMentReport()">Save</button>&nbsp;
+                <button [disabled]="+AppoinmentDetail.StatusId === 6" mat-raised-button color="primary"
+                  (click)="saveAppointMentReport()">Save</button>&nbsp;
               </div>
             </form>
             <div class="col-md-12">
@@ -291,7 +309,7 @@
           </div>
         </div>
         <form name="reqForm" role="form" class="well well-sm">
-          <fieldset>
+          <fieldset [disabled]="+AppoinmentDetail.StatusId === 6">
             <h5>Requirement Details </h5>
             <hr style="border-color:cadetblue" />
             <hr />
@@ -369,7 +387,8 @@
                 <td class="text-center">{{ row.Total }}</td>
                 <td class="text-center">
                   <div>
-                    <button type="button" (click)="onRemoveRequirementDetail(i)" class="btn btn-sm btn-danger">
+                    <button [disabled]="+AppoinmentDetail.StatusId === 6" type=" button"
+                      (click)="onRemoveRequirementDetail(i)" class="btn btn-sm btn-danger">
                       <i class="glyphicon glyphicon-remove-circle">
                       </i>
                     </button>
@@ -385,9 +404,10 @@
           </table>
         </div>
         <form role="form" name="reqsForm" class="well well-sm">
-          <fieldset>
+          <fieldset [disabled]="+AppoinmentDetail.StatusId === 6">
             <h5>
-              <mat-checkbox #existingCustomer [(ngModel)]="AppoinmentDetail.ExistCompetitors" value="true">Existing
+              <mat-checkbox #existingCustomer [(ngModel)]="AppoinmentDetail.ExistCompetitors"
+                [ngModelOptions]="{standalone: true}" value="true">Existing
                 Competitor
               </mat-checkbox>
             </h5>
@@ -399,7 +419,8 @@
                   <label for="Cname" class="control-label col-sm-3">Client Name</label>
                   <div class="col-sm-9">
                     <mat-form-field class="example-full-width">
-                      <input [(ngModel)]="existCompetitor.Name" matInput placeholder="Client Name">
+                      <input [(ngModel)]="existCompetitor.Name" [ngModelOptions]="{standalone: true}" matInput
+                        placeholder="Client Name">
                     </mat-form-field>
                   </div>
                 </div>
@@ -408,20 +429,23 @@
                 <div class="form-group col-sm-3">
                   <label for="service">Service Type</label>
                   <mat-form-field class="example-full-width">
-                    <input matInput [(ngModel)]="existCompetitor.Service" placeholder="Service Type">
+                    <input matInput [(ngModel)]="existCompetitor.Service" [ngModelOptions]="{standalone: true}"
+                      placeholder="Service Type">
                   </mat-form-field>
                 </div>
                 <div class="form-group col-sm-3">
                   <label for="designation">Designation</label>
                   <mat-form-field class="example-full-width">
-                    <input [(ngModel)]="existCompetitor.Designation" matInput placeholder="Designation">
+                    <input [(ngModel)]="existCompetitor.Designation" [ngModelOptions]="{standalone: true}" matInput
+                      placeholder="Designation">
                   </mat-form-field>
                 </div>
                 <div class="form-group col-sm-2">
                   <label for="rate">Rate Per Employee</label>
                   <div class="input-group">
                     <mat-form-field class="example-full-width">
-                      <input [(ngModel)]="existCompetitor.RatePerEmployee" matInput placeholder="Rate Per Employee">
+                      <input [(ngModel)]="existCompetitor.RatePerEmployee" [ngModelOptions]="{standalone: true}"
+                        matInput placeholder="Rate Per Employee">
                     </mat-form-field>
                   </div>
                 </div>
@@ -429,7 +453,8 @@
                   <label for="count">Employee Count</label>
                   <div class="input-group">
                     <mat-form-field class="example-full-width">
-                      <input [(ngModel)]="existCompetitor.EmployeeCount" matInput placeholder="Employee Count">
+                      <input [(ngModel)]="existCompetitor.EmployeeCount" [ngModelOptions]="{standalone: true}" matInput
+                        placeholder="Employee Count">
                     </mat-form-field>
                   </div>
                 </div>
@@ -466,7 +491,8 @@
                 <td class="text-center">{{ row.Total }}</td>
                 <td class="text-center">
                   <div>
-                    <button (click)="onRemoveCompetitor(i)" type="button" class="btn btn-sm btn-danger">
+                    <button [disabled]="+AppoinmentDetail.StatusId === 6" (click)=" onRemoveCompetitor(i)" type="button"
+                      class="btn btn-sm btn-danger">
                       <i class="glyphicon glyphicon-remove-circle">
                       </i>
                     </button>

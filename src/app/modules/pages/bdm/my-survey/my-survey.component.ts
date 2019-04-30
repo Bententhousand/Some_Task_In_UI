@@ -1,7 +1,8 @@
+import { ConfirmationDialogComponent } from "./../../../../shared/confirmation-dialog/confirmation-dialog.component";
 import { CityService } from "./../../../services/administrator/location/city.service";
 import { StateService } from "./../../../services/administrator/location/state.serivce";
 import { DatePipe, formatDate } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { MySurveyService } from "../../../services/bdm/my-survey.service";
 import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 import { HeaderStorageService } from "../../../../shared/header-storage.service";
@@ -12,7 +13,8 @@ import { MatCheckbox } from "@angular/material";
   selector: "app-my-survey",
   templateUrl: "./my-survey.component.html",
   styleUrls: ["./my-survey.component.css"],
-  providers: [DatePipe, HeaderStorageService]
+  providers: [DatePipe, HeaderStorageService],
+  entryComponents: [ConfirmationDialogComponent]
 })
 export class MySurveyComponent implements OnInit {
   isFormOpen: boolean = false;
@@ -32,6 +34,11 @@ export class MySurveyComponent implements OnInit {
   existCompetitor: any = {};
   ManPower = 0;
   ContractValue = 0;
+  Position = this._headerStorage.getPosition()
+    ? this._headerStorage.getPosition()
+    : "3";
+  @ViewChild("fileBrowser") fileBrowser: ElementRef;
+  selectedFilesList: any[] = [];
 
   objSearchParams = {
     searchEmployee: "",
@@ -48,7 +55,8 @@ export class MySurveyComponent implements OnInit {
   constructor(
     private _date: DatePipe,
     private _mySurvey: MySurveyService,
-    private _headerStorage: HeaderStorageService
+    private _headerStorage: HeaderStorageService,
+    private _confirmationDialog: ConfirmationDialogComponent
   ) {}
 
   ngOnInit() {}
@@ -81,6 +89,7 @@ export class MySurveyComponent implements OnInit {
 
   onEditRow(row) {
     this.selectedRowToEdit = row;
+    this.clearAllExistingInputs();
     this.isFormOpen = !this.isFormOpen;
     this.isEditing = true;
     this.getBDMAppointmentDetailByClientId(row);
@@ -216,7 +225,7 @@ export class MySurveyComponent implements OnInit {
     this._mySurvey.getActiveStatus(element).subscribe(
       res => {
         console.log(res, "getActiveStatus");
-        this.StateMasterList = res.result;
+        this.StatusList = res.result;
       },
       err => {
         console.log(err);
@@ -253,7 +262,19 @@ export class MySurveyComponent implements OnInit {
       Date: this.AppoinmentDetail.callHistoryDate,
       Remarks: this.AppoinmentDetail.callHistoryRemarks
     };
-    this._mySurvey.addAppoinmentReport(element).subscribe(
+    let objAppoinmentReport = new FormData();
+    for (let i = 0; i < this.selectedFilesList.length; i++) {
+      objAppoinmentReport.append("File[" + i + "]", this.selectedFilesList[i]);
+    }
+    objAppoinmentReport.append("data[0]", this.selectedRowToEdit.Id);
+    objAppoinmentReport.append("data[1]", element.Date);
+    objAppoinmentReport.append("data[2]", element.Calltype);
+    objAppoinmentReport.append("data[3]", element.Remarks);
+    objAppoinmentReport.append(
+      "data[4]",
+      this._headerStorage.getUserId() ? this._headerStorage.getUserId() : "1001"
+    );
+    this._mySurvey.addAppoinmentReport(objAppoinmentReport).subscribe(
       res => {
         console.log(res);
         this.getAllReportByClientId(this.selectedRowToEdit);
@@ -313,12 +334,25 @@ export class MySurveyComponent implements OnInit {
     this.ContractValue += +this.existCompetitor.Total;
     let element = Object.assign({}, this.existCompetitor);
     this.existingCompetitorsList.push(element);
+    this.existCompetitor = {};
   }
 
   onRemoveCompetitor(index: number) {
     this.ManPower -= this.existingCompetitorsList[index].EmployeeCount;
     this.ContractValue -= this.existingCompetitorsList[index].Total;
     this.existingCompetitorsList.splice(index, 1);
+  }
+
+  onFileSelected(event) {
+    if (event.target.files.length > 10) {
+      this._confirmationDialog.openAlertDialog(
+        "You can select only 10 files",
+        "My Survey"
+      );
+      this.fileBrowser.nativeElement.value = "";
+    } else {
+      this.selectedFilesList = event.target.files;
+    }
   }
 
   saveAppointmentDetail() {
@@ -342,21 +376,74 @@ export class MySurveyComponent implements OnInit {
       this._mySurvey.addBDMAppointmentDetails(this.AppoinmentDetail).subscribe(
         res => {
           console.log(res);
+          this.afterSaveOrUpdate();
         },
         err => {
           console.log(err);
         }
       );
     } else {
+      this.AppoinmentDetail.Id = this.selectedRowToEdit.Id;
+      this.AppoinmentDetail.ModifiedBy = this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001";
+      this._mySurvey
+        .updateBDMAppointmentDetails(this.AppoinmentDetail)
+        .subscribe(
+          res => {
+            console.log(res);
+            this.afterSaveOrUpdate();
+          },
+          err => {
+            console.log(err);
+          }
+        );
     }
+  }
+
+  afterSaveOrUpdate() {
+    this.isFormOpen = false;
+    this.isEditing = false;
+    this.clearAllExistingInputs();
+  }
+
+  clearAllExistingInputs() {
+    this.AppoinmentDetail = {};
+    this.requirementDetailsList = [];
+    // this.existingCompetitors.checked = false;
+    this.AppoinmentDetail.ExistCompetitors = false;
+    this.DesignationMasterList = [];
+    this.CityMasterList = [];
+    this.ServiceMasterList = [];
+    this.StateMasterList = [];
+    this.StatusList = [];
+    this.allReportsList = [];
+    this.existingCompetitorsList = [];
+    this.requirement = {};
+    this.objSearchParams = {
+      searchEmployee: "",
+      searchClient: "",
+      searchCallType: "",
+      FromDate: new Date(),
+      ToDate: new Date()
+    };
+    this.surveyGridDetails = [];
   }
 
   addBdmAppointment() {
     this.isEditing = false;
+    this.isFormOpen = true;
+    this.clearAllExistingInputs();
+    this.getActiveServiceMaster();
+    this.GetAllStatus();
+    this.getAllStates();
+    this.getAllCities();
+    this.getActiveStatus();
   }
 
   Cancel() {
     this.isFormOpen = false;
     this.isEditing = false;
+    this.clearAllExistingInputs();
   }
 }

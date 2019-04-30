@@ -18,8 +18,8 @@ export class MySurveyService {
   getSearchGridDetails(element) {
     return this._http
       .post<any>(
-        // apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentDetailById",
-        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentDetailById",
+        apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentDetailById",
+        // "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentDetailById",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -28,8 +28,8 @@ export class MySurveyService {
   getAppointmentDetailsByQuotationId(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentQuotationById",
-        // apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentQuotationById",
+        // "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentQuotationById",
+        apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentQuotationById",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -38,8 +38,8 @@ export class MySurveyService {
   getActiveServiceMaster(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/ServiceMaster/GetActiveServiceMaster",
-        // apiUrl + "ServiceMaster/GetActiveServiceMaster",
+        // "http://35.162.203.7/FMSApi/api/ServiceMaster/GetActiveServiceMaster",
+        apiUrl + "ServiceMaster/GetActiveServiceMaster",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -48,8 +48,8 @@ export class MySurveyService {
   getAllStatus(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/StatusMaster/GetAllStatus",
-        // apiUrl + "StatusMaster/GetAllStatus",
+        // "http://35.162.203.7/FMSApi/api/StatusMaster/GetAllStatus",
+        apiUrl + "StatusMaster/GetAllStatus",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -58,8 +58,8 @@ export class MySurveyService {
   getAllStates(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/StateMaster/GetAllStates",
-        // apiUrl + "StateMaster/GetAllStates",
+        // "http://35.162.203.7/FMSApi/api/StateMaster/GetAllStates",
+        apiUrl + "StateMaster/GetAllStates",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -68,8 +68,8 @@ export class MySurveyService {
   getAllCities(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/CityMaster/GetAllCities",
-        // apiUrl + "CityMaster/GetAllCities",
+        // "http://35.162.203.7/FMSApi/api/CityMaster/GetAllCities",
+        apiUrl + "CityMaster/GetAllCities",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -78,8 +78,8 @@ export class MySurveyService {
   getAllReportByClientId(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/BDMAppointmentReport/GetAllReportByClientId",
-        // apiUrl + "BDMAppointmentReport/GetAllReportByClientId",
+        // "http://35.162.203.7/FMSApi/api/BDMAppointmentReport/GetAllReportByClientId",
+        apiUrl + "BDMAppointmentReport/GetAllReportByClientId",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -88,8 +88,8 @@ export class MySurveyService {
   getActiveStatus(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/StatusMaster/GetActiveStatus",
-        // apiUrl + "StatusMaster/GetActiveStatus",
+        // "http://35.162.203.7/FMSApi/api/StatusMaster/GetActiveStatus",
+        apiUrl + "StatusMaster/GetActiveStatus",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -98,8 +98,8 @@ export class MySurveyService {
   getAppointmentDetailsByClientId(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
-        // apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
+        // "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
+        apiUrl + "BDMAppoinmentDetail/GetBDMAppointmentDetailByClientId",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -108,8 +108,8 @@ export class MySurveyService {
   addAppoinmentReport(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/BDMAppointmentReport/CreateBDMAppointmentReport",
-        // apiUrl + "BDMAppointmentReport/CreateBDMAppointmentReport",
+        // "http://35.162.203.7/FMSApi/api/BDMAppointmentReport/CreateBDMAppointmentReport",
+        apiUrl + "BDMAppointmentReport/CreateBDMAppointmentReport",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -118,8 +118,8 @@ export class MySurveyService {
   getDesignationListByServiceId(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/Designation/GetDesignationByStatusId",
-        // apiUrl + "Designation/GetDesignationByStatusId",
+        // "http://35.162.203.7/FMSApi/api/Designation/GetDesignationByStatusId",
+        apiUrl + "Designation/GetDesignationByStatusId",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -128,8 +128,8 @@ export class MySurveyService {
   addBDMAppointmentDetails(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/CreateBDMAppointmentDetail",
-        // apiUrl + "Designation/GetDesignationByStatusId",
+        // "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/CreateBDMAppointmentDetail",
+        apiUrl + "Designation/GetDesignationByStatusId",
         element
       )
       .pipe(catchError(this.errorHandler));
@@ -138,8 +138,8 @@ export class MySurveyService {
   updateBDMAppointmentDetails(element) {
     return this._http
       .post<any>(
-        "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/UpdateBDMAppointmentDetail",
-        // apiUrl + "Designation/GetDesignationByStatusId",
+        // "http://35.162.203.7/FMSApi/api/BDMAppoinmentDetail/UpdateBDMAppointmentDetail",
+        apiUrl + "Designation/GetDesignationByStatusId",
         element
       )
       .pipe(catchError(this.errorHandler));
