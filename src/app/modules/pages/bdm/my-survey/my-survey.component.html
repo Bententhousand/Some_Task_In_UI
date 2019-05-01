@@ -215,7 +215,8 @@
             </div>
           </div>
         </div>
-        <div class="box box-solid box-primary" style="overflow-x:scroll">
+        <div class="box box-solid box-primary" style="overflow-x:scroll"
+          *ngIf="[undefined,null,'',0].indexOf(this.selectedRowToEdit.Id) === -1">
           <div class="box-header">
             <span class="h5" style="color:white">
               Call History
@@ -290,7 +291,7 @@
                     <td>{{row.EmployeeName}}</td>
                     <td>
                       <div *ngIf="row.FileUrl ==''">
-                        <a target="_blank" href="{{'/ServeyImages/'+row.FileUrl}}"
+                        <a target="_blank" [href]="apiUrl+'/ServeyImages/'+row.FileUrl"
                           class="btn btn-sm btn-primary text-center">
                           <i class="glyphicon glyphicon-download">
                           </i>
@@ -444,8 +445,8 @@
                   <label for="rate">Rate Per Employee</label>
                   <div class="input-group">
                     <mat-form-field class="example-full-width">
-                      <input [(ngModel)]="existCompetitor.RatePerEmployee" [ngModelOptions]="{standalone: true}"
-                        matInput placeholder="Rate Per Employee">
+                      <input type="number" [(ngModel)]="existCompetitor.RatePerEmployee"
+                        [ngModelOptions]="{standalone: true}" matInput placeholder="Rate Per Employee">
                     </mat-form-field>
                   </div>
                 </div>
@@ -453,8 +454,8 @@
                   <label for="count">Employee Count</label>
                   <div class="input-group">
                     <mat-form-field class="example-full-width">
-                      <input [(ngModel)]="existCompetitor.EmployeeCount" [ngModelOptions]="{standalone: true}" matInput
-                        placeholder="Employee Count">
+                      <input type="number" [(ngModel)]="existCompetitor.EmployeeCount"
+                        [ngModelOptions]="{standalone: true}" matInput placeholder="Employee Count">
                     </mat-form-field>
                   </div>
                 </div>
@@ -509,7 +510,7 @@
         </div>
         <div class="row">
           <div class="col-sm-12" style="text-align:right">
-            <button mat-raised-button color="primary">Save</button>&nbsp;
+            <button mat-raised-button (click)="saveAppointmentDetail()" color="primary">Save</button>&nbsp;
             <button mat-raised-button color="accent" (click)="Cancel()">Cancel</button>
           </div>
         </div>

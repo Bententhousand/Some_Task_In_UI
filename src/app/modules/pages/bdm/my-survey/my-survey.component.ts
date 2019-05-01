@@ -8,6 +8,7 @@ import { connectableObservableDescriptor } from "rxjs/internal/observable/Connec
 import { HeaderStorageService } from "../../../../shared/header-storage.service";
 import { DesignationService } from "../../../services/master/designation.service";
 import { MatCheckbox } from "@angular/material";
+import { environment } from "../../../../../environments/environment";
 
 @Component({
   selector: "app-my-survey",
@@ -39,6 +40,7 @@ export class MySurveyComponent implements OnInit {
     : "3";
   @ViewChild("fileBrowser") fileBrowser: ElementRef;
   selectedFilesList: any[] = [];
+  apiUrl = environment.apiUrl;
 
   objSearchParams = {
     searchEmployee: "",
@@ -88,8 +90,8 @@ export class MySurveyComponent implements OnInit {
   }
 
   onEditRow(row) {
-    this.selectedRowToEdit = row;
     this.clearAllExistingInputs();
+    this.selectedRowToEdit = row;
     this.isFormOpen = !this.isFormOpen;
     this.isEditing = true;
     this.getBDMAppointmentDetailByClientId(row);
@@ -328,7 +330,7 @@ export class MySurveyComponent implements OnInit {
 
   onAddCompetitor() {
     this.existCompetitor.Total =
-      +this.existCompetitor.RatePerEmployee +
+      +this.existCompetitor.RatePerEmployee *
       +this.existCompetitor.EmployeeCount;
     this.ManPower += +this.existCompetitor.EmployeeCount;
     this.ContractValue += +this.existCompetitor.Total;
@@ -356,6 +358,16 @@ export class MySurveyComponent implements OnInit {
   }
 
   saveAppointmentDetail() {
+    this.requirementDetailsList.forEach(rec => {
+      rec.CreatedBy = this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001";
+    });
+    this.existingCompetitorsList.forEach(rec => {
+      rec.CreatedBy = this._headerStorage.getUserId()
+        ? this._headerStorage.getUserId()
+        : "1001";
+    });
     this.AppoinmentDetail.EmployeeId = this._headerStorage.getUserId()
       ? this._headerStorage.getUserId()
       : "1001";
@@ -373,6 +385,7 @@ export class MySurveyComponent implements OnInit {
       this.AppoinmentDetail.CreatedBy = this._headerStorage.getUserId()
         ? this._headerStorage.getUserId()
         : "1001";
+      console.log(this.AppoinmentDetail);
       this._mySurvey.addBDMAppointmentDetails(this.AppoinmentDetail).subscribe(
         res => {
           console.log(res);
@@ -387,6 +400,7 @@ export class MySurveyComponent implements OnInit {
       this.AppoinmentDetail.ModifiedBy = this._headerStorage.getUserId()
         ? this._headerStorage.getUserId()
         : "1001";
+      console.log(this.AppoinmentDetail);
       this._mySurvey
         .updateBDMAppointmentDetails(this.AppoinmentDetail)
         .subscribe(
@@ -428,6 +442,7 @@ export class MySurveyComponent implements OnInit {
       ToDate: new Date()
     };
     this.surveyGridDetails = [];
+    this.selectedRowToEdit = {};
   }
 
   addBdmAppointment() {
